@@ -38,7 +38,7 @@ pipeline AirportsPipeline{
     }
 
 	// As a last step, we load the table into a sink,
-	// here into a sqlite file.
+	// here into a sqlite file!
 	// The structural information of the table is used
 	// to generate the correct table.
     block AirportsLoader oftype SQLiteLoader {
