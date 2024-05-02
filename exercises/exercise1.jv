@@ -1,23 +1,28 @@
 pipeline AirportsPipeline{
 
-	// Here, we specify the URL where the file shall be downloaded from.
+    AirportsExtractor
+        -> AirportsTextInterpreter
+        -> AirportsCSVInterpreter
+        -> AirportsTableInterpreter
+        -> AirportsLoader;
+
+	// This is the URL where the file will be downloaded from.
     block AirportsExtractor oftype HttpExtractor {
         url: "https://opendata.rhein-kreis-neuss.de/api/explore/v2.1/catalog/datasets/rhein-kreis-neuss-flughafen-weltweit/exports/csv?lang=en&timezone=Europe%2FBerlin&use_labels=true&delimiter=%3B";
     }
 
-    // The output of the HttpExtractor has to be interpreted, e.g., as text file.
+    // The output of the HttpExtractor will be interpreted as a text file.
     block AirportsTextInterpreter oftype TextFileInterpreter {}
 
-    // Next, we interpret the text file as sheet.
-	// A sheet only contains text cells and is useful for manipulating the shape of data before assigning more strict value types to cells.
+    // Next, we interpret the text file as a csv sheet.
     block AirportsCSVInterpreter oftype CSVInterpreter {
         enclosing: '';
         delimiter: ";";
     }
 
-	// As a next step, we interpret the sheet as a table by adding structure.
-	// We define a value type per column that specifies the data type of the column.
-	// Rows that include values that are not valid according to the their value types are dropped automatically.
+	// The next step is to interpret the sheet as a table by adding structure.
+	// For each column, we define a value type that specifies the data type.
+	// Rows containing values that are not valid according to their value types are automatically omitted.
     block AirportsTableInterpreter oftype TableInterpreter {
         header: true;
         columns: [
@@ -37,19 +42,10 @@ pipeline AirportsPipeline{
         ];
     }
 
-	// As a last step, we load the table into a sink,
-	// here into a sqlite file!
-	// The structural information of the table is used
-	// to generate the correct table.
+	// As a last step, we load the table into a sink (sqlite file).
+	// The structural information of the table is used to generate the correct table.
     block AirportsLoader oftype SQLiteLoader {
         table: "airports";
         file: "./airports.sqlite";
     }
-
-    AirportsExtractor
-        -> AirportsTextInterpreter
-        -> AirportsCSVInterpreter
-        -> AirportsTableInterpreter
-        -> AirportsLoader;
-
 }
