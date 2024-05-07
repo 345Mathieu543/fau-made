@@ -1,0 +1,61 @@
+pipeline AirportsPipeline{
+
+    HerbstpflanzungsExtractor
+        -> HerbstpflanzungsTextInterpreter
+        -> HerbstpflanzungsCSVInterpreter
+        -> HerbstpflanzungsTableInterpreter
+        -> HerbstpflanzungsLoader;
+
+	// This is the URL where the file will be downloaded from.
+    block HerbstpflanzungsExtractor oftype HttpExtractor {
+        url: "https://opendata.rhein-kreis-neuss.de/api/v2/catalog/datasets/stadt-neuss-herbstpflanzung-2023/exports/csv";
+    }
+
+    // The output of the HttpExtractor will be interpreted as a text file.
+    block HerbstpflanzungsTextInterpreter oftype TextFileInterpreter {}
+
+    // Next, we interpret the text file as a csv sheet.
+    block HerbstpflanzungsCSVInterpreter oftype CSVInterpreter {
+        enclosing: '';
+        delimiter: ";";
+    }
+
+    // We define a custom value type for the column "stadtteil", in order to filter out rows that do not match the regex.
+    valuetype furths oftype text {
+    constraints: [ stadtteilConstraint ];}
+
+    constraint stadtteilConstraint oftype RegexConstraint {
+        regex: /^Furth-.*$/;
+    }
+
+    // {1-3 numbers}.{numbers}
+    valuetype coordinates oftype text {
+    constraints: [ coordinatesConstraint ];}
+
+    constraint coordinatesConstraint oftype RegexConstraint {
+        regex: /^[0-9]{1,3}.[0-9]*, [0-9]{1,3}.[0-9]*$/;
+    }
+
+	// The next step is to interpret the sheet as a table by adding structure.
+	// For each column, we define a value type that specifies the data type.
+	// Rows containing values that are not valid according to their value types are automatically omitted.
+    block HerbstpflanzungsTableInterpreter oftype TableInterpreter {
+        header: true;
+        columns: [
+            "lfd_nr" oftype integer,
+            "stadtteil" oftype furths,
+            "standort" oftype text,
+            "baumart_botanisch" oftype text,
+            // "baumart_deutsch" oftype text,
+            "id" oftype coordinates,
+            "baumfamilie" oftype text
+        ];
+    }
+
+	// As a last step, we load the table into a sink (sqlite file).
+	// The structural information of the table is used to generate the correct table.
+    block HerbstpflanzungsLoader oftype SQLiteLoader {
+        table: "trees";
+        file: "./trees.sqlite";
+    }
+}
