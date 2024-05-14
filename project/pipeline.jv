@@ -1,0 +1,153 @@
+pipeline Pipeline {
+
+    PedestriansLocalFileExtractor
+        -> PedestriansTextFileInterpreter
+        -> PedestriansCSVInterpreter
+        -> PedestriansTableInterpreter
+        -> PedestriansSQLiteLoader;
+    
+    RainMoeLocalFileExtractor
+        -> RainMoeTextFileInterpreter
+        -> RainMoeCSVInterpreter
+        -> RainMoeTableInterpreter
+        -> RainMoeSQLiteLoader;
+    
+    RainNueLocalFileExtractor
+        -> RainNueTextFileInterpreter
+        -> RainNueCSVInterpreter
+        -> RainNueTableInterpreter
+        -> RainNueSQLiteLoader;
+    
+    TempMoeLocalFileExtractor
+        -> TempMoeTextFileInterpreter
+        -> TempMoeCSVInterpreter
+        -> TempMoeTableInterpreter
+        -> TempMoeSQLiteLoader;
+    
+    TempNueLocalFileExtractor
+        -> TempNueTextFileInterpreter
+        -> TempNueCSVInterpreter
+        -> TempNueTableInterpreter
+        -> TempNueSQLiteLoader;
+
+    block PedestriansLocalFileExtractor oftype LocalFileExtractor {
+        filePath: "data/ped-erlangen-hauptstraße-20240101-20240513.csv";
+    }
+
+    block RainMoeLocalFileExtractor oftype LocalFileExtractor {
+        filePath: "data/rain-moehrendorf-kleinseebach-20240101-20240513.csv";
+    }
+
+    block RainNueLocalFileExtractor oftype LocalFileExtractor {
+        filePath: "data/rain-nuremberg-airport-20240101-20240513.csv";
+    }
+
+    block TempMoeLocalFileExtractor oftype LocalFileExtractor {
+        filePath: "data/rain-moehrendorf-kleinseebach-20240101-20240513.csv";
+    }
+
+    block TempNueLocalFileExtractor oftype LocalFileExtractor {
+        filePath: "data/rain-nuremberg-airport-20240101-20240513.csv";
+    }
+
+    block PedestriansTextFileInterpreter oftype TextFileInterpreter {}
+
+    block RainMoeTextFileInterpreter oftype TextFileInterpreter {}
+
+    block RainNueTextFileInterpreter oftype TextFileInterpreter {}
+
+    block TempMoeTextFileInterpreter oftype TextFileInterpreter {}
+
+    block TempNueTextFileInterpreter oftype TextFileInterpreter {}
+
+    block PedestriansCSVInterpreter oftype CSVInterpreter {
+        enclosing: '';
+        delimiter: ";";
+    }
+
+    block RainMoeCSVInterpreter oftype CSVInterpreter {
+        enclosing: '';
+        delimiter: ",";
+    }
+
+    block RainNueCSVInterpreter oftype CSVInterpreter {
+        enclosing: '';
+        delimiter: ",";
+    }
+
+    block TempMoeCSVInterpreter oftype CSVInterpreter {
+        enclosing: '';
+        delimiter: ",";
+    }
+
+    block TempNueCSVInterpreter oftype CSVInterpreter {
+        enclosing: '';
+        delimiter: ",";
+    }
+
+    block PedestriansTableInterpreter oftype TableInterpreter {
+        header: true;
+        columns: [
+            "time of measurement" oftype text,
+            "weekday" oftype text,
+            "pedestrians count" oftype integer
+        ];
+    }
+
+    block RainMoeTableInterpreter oftype TableInterpreter {
+        header: true;
+        columns: [
+            "category" oftype text,
+            "Niederschlag (6 bis 6 UTC)" oftype decimal
+        ];
+    }
+
+    block RainNueTableInterpreter oftype TableInterpreter {
+        header: true;
+        columns: [
+            "category" oftype text,
+            "Niederschlag (6 bis 6 UTC)" oftype decimal
+        ];
+    }
+
+    block TempMoeTableInterpreter oftype TableInterpreter {
+        header: true;
+        columns: [
+            "category" oftype text,
+            "Mittelwert" oftype decimal // not working yet
+        ];
+    }
+
+    block TempNueTableInterpreter oftype TableInterpreter {
+        header: true;
+        columns: [
+            "category" oftype text,
+            "Mittelwert" oftype decimal // not working yet
+        ];
+    }
+
+    block PedestriansSQLiteLoader oftype SQLiteLoader {
+        table: "pedestrians";
+        file: "./data.sqlite";
+    }
+
+    block RainMoeSQLiteLoader oftype SQLiteLoader {
+        table: "rainmoe";
+        file: "./data.sqlite";
+    }
+
+    block RainNueSQLiteLoader oftype SQLiteLoader {
+        table: "rainnue";
+        file: "./data.sqlite";
+    }
+
+    block TempMoeSQLiteLoader oftype SQLiteLoader {
+        table: "tempmoe";
+        file: "./data.sqlite";
+    }
+
+    block TempNueSQLiteLoader oftype SQLiteLoader {
+        table: "tempnue";
+        file: "./data.sqlite";
+    }
+}
