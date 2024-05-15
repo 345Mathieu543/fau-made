@@ -47,7 +47,20 @@ URL, where data was downloaded from: [Erlangen Hugenottenplatz (01.01.2024 - 13.
 
 <!-- List of work packages ordered sequentially, each pointing to an issue with more details. -->
 
-1. Example Issue [#1][i1]
-2. ...
+1. Download Data [#1][i1]
+2. Analyze Data [#2][i2]
+3. Import Data to a SQLite Database [#3][i3]
+4. Calculate Average Temp and Rain [#4][i4]
+5. Plot meaningful Graphs [#5][i5]
+6. Analyze Graphs [#6][i6]
+7. Write Final Report [#7][i7]
+8. Prepare Presentation of the Results [#8][i8]
 
-[i1]: https://github.com/jvalue/made-template/issues/1
+[i1]: https://github.com/345Mathieu543/fau-made/issues/1
+[i2]: https://github.com/345Mathieu543/fau-made/issues/2
+[i3]: https://github.com/345Mathieu543/fau-made/issues/3
+[i4]: https://github.com/345Mathieu543/fau-made/issues/4
+[i5]: https://github.com/345Mathieu543/fau-made/issues/5
+[i6]: https://github.com/345Mathieu543/fau-made/issues/6
+[i7]: https://github.com/345Mathieu543/fau-made/issues/7
+[i8]: https://github.com/345Mathieu543/fau-made/issues/8
