@@ -128,26 +128,26 @@ pipeline Pipeline {
 
     block PedestriansSQLiteLoader oftype SQLiteLoader {
         table: "pedestrians";
-        file: "./data.sqlite";
+        file: "../data/data.sqlite";
     }
 
     block RainMoeSQLiteLoader oftype SQLiteLoader {
         table: "rainmoe";
-        file: "./data.sqlite";
+        file: "../data/data.sqlite";
     }
 
     block RainNueSQLiteLoader oftype SQLiteLoader {
         table: "rainnue";
-        file: "./data.sqlite";
+        file: "../data/data.sqlite";
     }
 
     block TempMoeSQLiteLoader oftype SQLiteLoader {
         table: "tempmoe";
-        file: "./data.sqlite";
+        file: "../data/data.sqlite";
     }
 
     block TempNueSQLiteLoader oftype SQLiteLoader {
         table: "tempnue";
-        file: "./data.sqlite";
+        file: "../data/data.sqlite";
     }
 }
