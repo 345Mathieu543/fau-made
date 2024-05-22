@@ -1,2 +1,4 @@
 #!/bin/bash
-jv /project/pipeline.jv
+cd $(dirname "$0")
+pwd
+jv -d ./pipeline.jv

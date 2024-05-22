@@ -31,23 +31,23 @@ pipeline Pipeline {
         -> TempNueSQLiteLoader;
 
     block PedestriansLocalFileExtractor oftype LocalFileExtractor {
-        filePath: "data/ped-erlangen-hauptstraße-20240101-20240513.csv";
+        filePath: "csv_files/ped-erlangen-hauptstraße-20240101-20240513.csv";
     }
 
     block RainMoeLocalFileExtractor oftype LocalFileExtractor {
-        filePath: "data/rain-moehrendorf-kleinseebach-20240101-20240513.csv";
+        filePath: "csv_files/rain-moehrendorf-kleinseebach-20240101-20240513.csv";
     }
 
     block RainNueLocalFileExtractor oftype LocalFileExtractor {
-        filePath: "data/rain-nuremberg-airport-20240101-20240513.csv";
+        filePath: "csv_files/rain-nuremberg-airport-20240101-20240513.csv";
     }
 
     block TempMoeLocalFileExtractor oftype LocalFileExtractor {
-        filePath: "data/rain-moehrendorf-kleinseebach-20240101-20240513.csv";
+        filePath: "csv_files/rain-moehrendorf-kleinseebach-20240101-20240513.csv";
     }
 
     block TempNueLocalFileExtractor oftype LocalFileExtractor {
-        filePath: "data/rain-nuremberg-airport-20240101-20240513.csv";
+        filePath: "csv_files/rain-nuremberg-airport-20240101-20240513.csv";
     }
 
     block PedestriansTextFileInterpreter oftype TextFileInterpreter {}
