@@ -43,11 +43,11 @@ pipeline Pipeline {
     }
 
     block TempMoeLocalFileExtractor oftype LocalFileExtractor {
-        filePath: "csv_files/rain-moehrendorf-kleinseebach-20240101-20240513.csv";
+        filePath: "csv_files/temp-moehrendorf-kleinseebach-20240101-20240513.csv";
     }
 
     block TempNueLocalFileExtractor oftype LocalFileExtractor {
-        filePath: "csv_files/rain-nuremberg-airport-20240101-20240513.csv";
+        filePath: "csv_files/temp-nuremberg-airport-20240101-20240513.csv";
     }
 
     block PedestriansTextFileInterpreter oftype TextFileInterpreter {}
@@ -97,7 +97,7 @@ pipeline Pipeline {
     block RainMoeTableInterpreter oftype TableInterpreter {
         header: true;
         columns: [
-            "category" oftype text,
+            // "category" oftype text,
             "Niederschlag (6 bis 6 UTC)" oftype decimal
         ];
     }
@@ -105,7 +105,7 @@ pipeline Pipeline {
     block RainNueTableInterpreter oftype TableInterpreter {
         header: true;
         columns: [
-            "category" oftype text,
+            // "category" oftype text,
             "Niederschlag (6 bis 6 UTC)" oftype decimal
         ];
     }
@@ -113,16 +113,16 @@ pipeline Pipeline {
     block TempMoeTableInterpreter oftype TableInterpreter {
         header: true;
         columns: [
-            "category" oftype text,
-            "Mittelwert" oftype decimal // not working yet
+            // "category" oftype text,
+            "Mittelwert" oftype decimal
         ];
     }
 
     block TempNueTableInterpreter oftype TableInterpreter {
         header: true;
         columns: [
-            "category" oftype text,
-            "Mittelwert" oftype decimal // not working yet
+            // "category" oftype text,
+            "Mittelwert" oftype decimal
         ];
     }
 
