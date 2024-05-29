@@ -14,7 +14,9 @@ pipeline GueterPipeline{
     }
 
     // The output of the HttpExtractor will be interpreted as a text file.
-    block GTextInterpreter oftype TextFileInterpreter {}
+    block GTextInterpreter oftype TextFileInterpreter {
+        encoding: "latin2";
+    }
 
     block GTextRangeSelector oftype TextRangeSelector {
         lineFrom: 9;
@@ -33,7 +35,7 @@ pipeline GueterPipeline{
     }
 
     // We define a custom value type for all numeric columns, in order to filter out rows that do not match the regex.
-    valuetype posInteger oftype integer {
+    valuetype posInteger oftype text {
     constraints: [ posIntegerConstraint ];}
 
     constraint posIntegerConstraint oftype RegexConstraint {
@@ -44,8 +46,8 @@ pipeline GueterPipeline{
     valuetype germanMonths oftype text {
     constraints: [ germanMonthsConstraint ];}
 
-    constraint germanMonthsConstraint oftype RegexConstraint {
-        regex: /^(Januar|Februar|März|April|Mai|Juni|Juli|August|September|Oktober|November|Dezember)$/;
+    constraint germanMonthsConstraint oftype AllowlistConstraint {
+        allowlist: ["Januar" ,"Februar" ,"März" ,"April" ,"Mai" ,"Juni" ,"Juli" ,"August" ,"September" ,"Oktober" ,"November" ,"Dezember"];
     }
 
     // We define a custom value type for the column "goods_id", in order to filter out rows that do not match the regex.
