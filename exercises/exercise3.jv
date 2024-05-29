@@ -35,7 +35,7 @@ pipeline GueterPipeline{
     }
 
     // We define a custom value type for all numeric columns, in order to filter out rows that do not match the regex.
-    valuetype posInteger oftype text {
+    valuetype posInteger oftype integer {
     constraints: [ posIntegerConstraint ];}
 
     constraint posIntegerConstraint oftype RangeConstraint {
