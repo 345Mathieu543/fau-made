@@ -1,0 +1,81 @@
+pipeline GueterPipeline{
+
+    GExtractor
+        -> GTextInterpreter
+        -> GTextRangeSelector
+        -> GCSVInterpreter
+        -> GColumnDeleter
+        -> GTableInterpreter
+        -> GLoader;
+
+	// This is the URL where the file will be downloaded from.
+    block GExtractor oftype HttpExtractor {
+        url: "https://www-genesis.destatis.de/genesis/downloads/00/tables/46131-0014_00.csv";
+    }
+
+    // The output of the HttpExtractor will be interpreted as a text file.
+    block GTextInterpreter oftype TextFileInterpreter {}
+
+    block GTextRangeSelector oftype TextRangeSelector {
+        lineFrom: 9;
+        lineTo: 41336;
+    }
+
+    // Next, we interpret the text file as a csv sheet.
+    block GCSVInterpreter oftype CSVInterpreter {
+        enclosing: '';
+        delimiter: ";";
+    }
+
+    // The next step is to delete the columns "F" to "AS" from the csv sheet. Only the columns "A" to "E" and "AT" to "AU" will be kept.
+    block GColumnDeleter oftype ColumnDeleter {
+        delete: [column F, column G, column H, column I, column J, column K, column L, column M, column N, column O, column P, column Q, column R, column S, column T, column U, column V, column W, column X, column Y, column Z, column AA, column AB, column AC, column AD, column AE, column AF, column AG, column AH, column AI, column AJ, column AK, column AL, column AM, column AN, column AO, column AP, column AQ, column AR, column AS];
+    }
+
+    // We define a custom value type for all numeric columns, in order to filter out rows that do not match the regex.
+    valuetype posInteger oftype integer {
+    constraints: [ posIntegerConstraint ];}
+
+    constraint posIntegerConstraint oftype RegexConstraint {
+        regex: /^[1-9]\d*$/;
+    }
+
+    // We define a custom value type for the column "month", in order to filter out rows that do not match the regex.
+    valuetype germanMonths oftype text {
+    constraints: [ germanMonthsConstraint ];}
+
+    constraint germanMonthsConstraint oftype RegexConstraint {
+        regex: /^(Januar|Februar|März|April|Mai|Juni|Juli|August|September|Oktober|November|Dezember)$/;
+    }
+
+    // We define a custom value type for the column "goods_id", in order to filter out rows that do not match the regex.
+    valuetype goodsId oftype text {
+    constraints: [ goodsIdConstraint ];}
+
+    constraint goodsIdConstraint oftype RegexConstraint {
+        regex: /^NST7-[0-9A-Z]{3}$/;
+    }
+
+	// The next step is to interpret the sheet as a table by adding structure.
+	// For each column, we define a value type that specifies the data type.
+	// Rows containing values that are not valid according to their value types are automatically omitted.
+    block GTableInterpreter oftype TableInterpreter {
+        header: false;
+        columns: [
+            "year" oftype posInteger,
+            "month" oftype germanMonths,
+            "goods_id" oftype goodsId,
+            "goods_name" oftype text,
+            "goods_source" oftype text,
+            "abroad" oftype posInteger,
+            "total" oftype posInteger,
+        ];
+    }
+
+	// As a last step, we load the table into a sink (sqlite file).
+	// The structural information of the table is used to generate the correct table.
+    block GLoader oftype SQLiteLoader {
+        table: "goods";
+        file: "./goodsTransportedByTrain.sqlite";
+    }
+}
