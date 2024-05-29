@@ -38,8 +38,8 @@ pipeline GueterPipeline{
     valuetype posInteger oftype text {
     constraints: [ posIntegerConstraint ];}
 
-    constraint posIntegerConstraint oftype RegexConstraint {
-        regex: /^[1-9]\d*$/;
+    constraint posIntegerConstraint oftype RangeConstraint {
+        lowerBound: 1;
     }
 
     // We define a custom value type for the column "month", in order to filter out rows that do not match the regex.
