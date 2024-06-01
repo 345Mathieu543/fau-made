@@ -5,49 +5,90 @@ pipeline Pipeline {
         -> PedestriansCSVInterpreter
         -> PedestriansTableInterpreter
         -> PedestriansSQLiteLoader;
-    
-    RainMoeLocalFileExtractor
+
+    RainMoeHttpExtractor
+        -> RainMoeArchiveInterpreter
+        -> RainMoeProductFilePicker
         -> RainMoeTextFileInterpreter
         -> RainMoeCSVInterpreter
         -> RainMoeTableInterpreter
         -> RainMoeSQLiteLoader;
     
-    RainNueLocalFileExtractor
+    RainNueHttpExtractor
+        -> RainNueArchiveInterpreter
+        -> RainNueProductFilePicker
         -> RainNueTextFileInterpreter
         -> RainNueCSVInterpreter
         -> RainNueTableInterpreter
         -> RainNueSQLiteLoader;
     
-    TempMoeLocalFileExtractor
+    TempMoeHttpExtractor
+        -> TempMoeArchiveInterpreter
+        -> TempMoeProductFilePicker
         -> TempMoeTextFileInterpreter
         -> TempMoeCSVInterpreter
         -> TempMoeTableInterpreter
         -> TempMoeSQLiteLoader;
     
-    TempNueLocalFileExtractor
+    TempNueHttpExtractor
+        -> TempNueArchiveInterpreter
+        -> TempNueProductFilePicker
         -> TempNueTextFileInterpreter
         -> TempNueCSVInterpreter
         -> TempNueTableInterpreter
         -> TempNueSQLiteLoader;
 
     block PedestriansLocalFileExtractor oftype LocalFileExtractor {
-        filePath: "csv_files/ped-erlangen-hauptstraße-20240101-20240513.csv";
+        // filePath: "csv_files/ped-erlangen-hauptstraße-20240101-20240513.csv";
+        filePath: "csv_files/PedData.csv";
     }
 
-    block RainMoeLocalFileExtractor oftype LocalFileExtractor {
-        filePath: "csv_files/rain-moehrendorf-kleinseebach-20240101-20240513.csv";
+    block RainMoeHttpExtractor oftype HttpExtractor {
+        url: "https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/daily/more_precip/recent/tageswerte_RR_01279_akt.zip";
     }
 
-    block RainNueLocalFileExtractor oftype LocalFileExtractor {
-        filePath: "csv_files/rain-nuremberg-airport-20240101-20240513.csv";
+    block RainNueHttpExtractor oftype HttpExtractor {
+        url: "https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/daily/more_precip/recent/tageswerte_RR_03668_akt.zip";
     }
 
-    block TempMoeLocalFileExtractor oftype LocalFileExtractor {
-        filePath: "csv_files/temp-moehrendorf-kleinseebach-20240101-20240513.csv";
+    block TempMoeHttpExtractor oftype HttpExtractor {
+        url: "https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/daily/kl/recent/tageswerte_KL_01279_akt.zip";
     }
 
-    block TempNueLocalFileExtractor oftype LocalFileExtractor {
-        filePath: "csv_files/temp-nuremberg-airport-20240101-20240513.csv";
+    block TempNueHttpExtractor oftype HttpExtractor {
+        url: "https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/daily/kl/recent/tageswerte_KL_03668_akt.zip";
+    }
+
+    block RainMoeArchiveInterpreter oftype ArchiveInterpreter {
+        archiveType: "zip";
+    }
+
+    block RainNueArchiveInterpreter oftype ArchiveInterpreter {
+        archiveType: "zip";
+    }
+
+    block TempMoeArchiveInterpreter oftype ArchiveInterpreter {
+        archiveType: "zip";
+    }
+
+    block TempNueArchiveInterpreter oftype ArchiveInterpreter {
+        archiveType: "zip";
+    }
+
+    block RainMoeProductFilePicker oftype FilePicker {
+        path: "/produkt_nieder_tag_20221129_20240531_01279.txt";
+    }
+
+    block RainNueProductFilePicker oftype FilePicker {
+        path: "/produkt_nieder_tag_20221129_20240531_03668.txt";
+    }
+
+    block TempMoeProductFilePicker oftype FilePicker {
+        path: "/produkt_klima_tag_20221129_20240531_01279.txt";
+    }
+
+    block TempNueProductFilePicker oftype FilePicker {
+        path: "/produkt_klima_tag_20221129_20240531_03668.txt";
     }
 
     block PedestriansTextFileInterpreter oftype TextFileInterpreter {}
@@ -61,68 +102,65 @@ pipeline Pipeline {
     block TempNueTextFileInterpreter oftype TextFileInterpreter {}
 
     block PedestriansCSVInterpreter oftype CSVInterpreter {
-        enclosing: '';
         delimiter: ";";
     }
 
     block RainMoeCSVInterpreter oftype CSVInterpreter {
-        enclosing: '';
-        delimiter: ",";
+        delimiter: ";";
     }
 
     block RainNueCSVInterpreter oftype CSVInterpreter {
-        enclosing: '';
-        delimiter: ",";
+        delimiter: ";";
     }
 
     block TempMoeCSVInterpreter oftype CSVInterpreter {
-        enclosing: '';
-        delimiter: ",";
+        delimiter: ";";
     }
 
     block TempNueCSVInterpreter oftype CSVInterpreter {
-        enclosing: '';
-        delimiter: ",";
+        delimiter: ";";
     }
 
     block PedestriansTableInterpreter oftype TableInterpreter {
         header: true;
         columns: [
-            "time of measurement" oftype text,
-            "weekday" oftype text,
-            "pedestrians count" oftype integer
+            "timestamp" oftype integer,
+            "pedestrians_count" oftype integer,
+            // "time of measurement" oftype text,
+            // "weekday" oftype text,
+            // "pedestrians count" oftype integer
         ];
     }
 
     block RainMoeTableInterpreter oftype TableInterpreter {
         header: true;
         columns: [
-            // "category" oftype text,
-            "Niederschlag (6 bis 6 UTC)" oftype decimal
+            "MESS_DATUM" oftype integer,
+            "  RS" oftype text
         ];
     }
 
     block RainNueTableInterpreter oftype TableInterpreter {
         header: true;
         columns: [
-            // "category" oftype text,
-            "Niederschlag (6 bis 6 UTC)" oftype decimal
+            "MESS_DATUM" oftype integer,
+            "  RS" oftype text
         ];
     }
 
     block TempMoeTableInterpreter oftype TableInterpreter {
         header: true;
         columns: [
-            // "category" oftype text,
-            "Mittelwert" oftype decimal
+            "MESS_DATUM" oftype integer,
+            " TMK" oftype text
         ];
     }
 
     block TempNueTableInterpreter oftype TableInterpreter {
         header: true;
         columns: [
-            // "category" oftype text,
-            "Mittelwert" oftype decimal
+            "MESS_DATUM" oftype integer,
+            " TMK" oftype text
         ];
     }
 
