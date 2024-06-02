@@ -1,4 +1,6 @@
 # Data Report
+<!-- generate pdf with the following command -->
+<!-- pandoc data-report.md -o data-report.pdf -V papersize:a4 -V geometry:margin=2.5cm -->
 
 ## Question
 <!-- Your question for your whole project -->
@@ -13,18 +15,22 @@ This analysis uses historical weather data, including temperature and rainfall m
 #### Structure and Quality
 <!-- What is the data structure and quality of your sources? (Compare lecture D01) -->
 
+\mbox{}
+
 The data from the "Deutscher Wetterdienst" is retrieved as a ZIP file. The text file containing the data is structured like a CSV file with ";" as separator. Unfortunately, it is filled with spaces to align the content and facilitate human readability. For the automatic data pipeline this was an obstacle that had to be handled.
 
 ##### Data Structure (rain dataset)
 
 - STATIONS_ID: Station ID.
-- MESS_DATUM: Date of measurement.
+- **MESS_DATUM**: Date of measurement.
 - QN_6: Quality level.
-- RS: Rainfall amount (mm).
+- **RS**: Rainfall amount (mm).
 - RSF: Rainfall form (type).
 - SH_TAG: Snow height (cm).
 - NSH_TAG: New snow height (cm).
 - eor: End of record indicator.
+
+*Only the bolt attributes were used for this project.*
 
 ##### Data Quality (rain dataset)
 
@@ -37,7 +43,7 @@ The data from the "Deutscher Wetterdienst" is retrieved as a ZIP file. The text 
 ##### Data Structure (temperature dataset)
 
 - ONS_ID: Observation station ID.
-- MESS_DATUM: Date of measurement.
+- **MESS_DATUM**: Date of measurement.
 - QN_3: Quality level 3.
 - FX: Maximum wind speed (m/s).
 - FM: Mean wind speed (m/s).
@@ -49,12 +55,14 @@ The data from the "Deutscher Wetterdienst" is retrieved as a ZIP file. The text 
 - NM: Cloud cover (1/8).
 - VPM: Vapor pressure (hPa).
 - PM: Air pressure (hPa).
-- TMK: Mean temperature (°C).
+- **TMK**: Mean temperature (°C).
 - UPM: Relative humidity (%).
 - TXK: Maximum temperature (°C).
 - TNK: Minimum temperature (°C).
 - TGK: Ground minimum temperature (°C).
 - eor: End of record indicator.
+
+*Only the bolt attributes were used for this project.*
 
 ##### Data Quality (temperature dataset)
 
@@ -68,6 +76,8 @@ The data from the "Deutscher Wetterdienst" is retrieved as a ZIP file. The text 
 <!-- Describe the licenses of your data sources, why you are allowed to use the data and how you are planning to follow their obligations -->
 <!-- If your source data is under a standard open-data license just pointing out where to find that is enough information for being allowed to use it, please still describe how you plan to fulfill their obligations -->
 
+\mbox{}
+
 See license at heading 2.2 here: [https://www.dwd.de/DE/leistungen/opendata/faqs_opendata.html](https://www.dwd.de/DE/leistungen/opendata/faqs_opendata.html)
 
 ### Datasource 2: [hystreet.com](https://www.hystreet.com)
@@ -75,16 +85,18 @@ See license at heading 2.2 here: [https://www.dwd.de/DE/leistungen/opendata/faqs
 #### Structure and Quality
 <!-- What is the data structure and quality of your sources? (Compare lecture D01) -->
 
+\mbox{}
+
 The data from HyStreet is retrieved by an API request. The response is in JSON format.  
 The source provides a large amount of data, while in this project only the attributes 'timestamp' and 'pedestrians_count' were used and converted to a csv file which will be described later in the pipeline section.
 
 ##### Data Structure
 
-- Timestamp: ISO 8601 format indicating the date and time.
+- **Timestamp**: ISO 8601 format indicating the date and time.
 - Weather Condition: String describing the weather (e.g., "rain").
 - Temperature: Floating point number for the current temperature.
 - Min Temperature: Floating point number for the minimum temperature.
-- Pedestrians Count: Integer for the total number of pedestrians.
+- **Pedestrians Count**: Integer for the total number of pedestrians.
 - Unverified: Boolean indicating if the data is verified.
 - Details: Nested dictionary containing:
   - Counts of pedestrians moving left-to-right (ltr) and right-to-left (rtl).
@@ -93,6 +105,8 @@ The source provides a large amount of data, while in this project only the attri
 - Incidents: List (empty in this case).
 - Permissions: List of access permissions.
 - GeoJSON: Dictionary representing geographic data in GeoJSON format.
+
+*Only the bolt attributes were used for this project.*
 
 ##### Data Quality
 
@@ -116,6 +130,8 @@ The HyStreet data source provides well-structured and detailed data, suitable fo
 #### Permission to use the data
 <!-- Describe the licenses of your data sources, why you are allowed to use the data and how you are planning to follow their obligations -->
 <!-- If your source data is under a standard open-data license just pointing out where to find that is enough information for being allowed to use it, please still describe how you plan to fulfill their obligations -->
+
+\mbox{}
 
 See permission to use the data at heading 4 here: [https://hystreet.com/agb](https://hystreet.com/agb)  
 Additionally the permission was granted per email, to use the data from the last 3 years of the location 'Erlangen'.
@@ -152,9 +168,9 @@ For grading: If a proof of the email conversation is needed, please contact me.
 <!-- What data format did you choose as the output of your pipeline and why -->
 <!-- Critically reflect on your data and any potential issues you anticipate for your final report -->
 
-![1](pics/plot1.png)
-![2](pics/plot2.png)
-![3](pics/plot3.png)
+![plot1.svg](pics/plot1.pdf)
+![plot2.svg](pics/plot2.pdf)
+![plot3.svg](pics/plot3.pdf)
 
 Outliers:
 
