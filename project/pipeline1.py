@@ -1,7 +1,8 @@
 import http.client
 import urllib.parse
 import json
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
+import pytz
 import pandas as pd
 
 conn = http.client.HTTPSConnection("static.hystreet.com")
@@ -18,11 +19,16 @@ headers = {
     'X-API-Token': apiKey
     }
 
+cet = pytz.timezone("CET")
+
 enddate = datetime.now() - timedelta(days=1)
 startdate = enddate - timedelta(days=549)
 
-start = urllib.parse.quote_plus(startdate.strftime("%Y-%m-%dT%H:%M:%S%z"))
-end = urllib.parse.quote_plus(enddate.strftime("%Y-%m-%dT%H:%M:%S%z"))
+start = urllib.parse.quote_plus(cet.localize(startdate.replace(hour=0, minute=0, second=0)).strftime("%Y-%m-%dT%H:%M:%S%z"))
+end = urllib.parse.quote_plus(cet.localize(enddate.replace(hour=23, minute=59, second=59)).strftime("%Y-%m-%dT%H:%M:%S%z"))
+
+print(f"Start date: {start}")
+print(f"End date: {end}")
 
 body = f"from={start}&to={end}&resolution=day"
 
