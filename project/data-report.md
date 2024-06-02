@@ -29,3 +29,7 @@
 <!-- What is the data structure and quality of your result? (Compare lecture D01) -->
 <!-- What data format did you choose as the output of your pipeline and why -->
 <!-- Critically reflect on your data and any potential issues you anticipate for your final report -->
+
+![1](pics/plot1.png)
+![2](pics/plot2.png)
+![3](pics/plot3.png)
