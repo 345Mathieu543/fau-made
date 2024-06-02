@@ -76,34 +76,34 @@ pipeline Pipeline {
 
     block RainMoeFilePicker oftype FilePicker {
         // String has to be adapted to the following pattern (automation was not possible here):
-        // First number should be the date of yesterday - 550 days
-        // Second number sould be the date of yesterday
+        // First number should be the date of yesterday (before 11:35 am - 1 day) - 550 days
+        // Second number sould be the date of yesterday (before 11:35 am - 1 day)
         // Third number should be the station number (does not change)
-        path: "/produkt_nieder_tag_20221129_20240531_01279.txt";
+        path: "/produkt_nieder_tag_20221130_20240601_01279.txt";
     }
 
     block RainNueFilePicker oftype FilePicker {
         // String has to be adapted to the following pattern (automation was not possible here):
-        // First number should be the date of yesterday - 550 days
-        // Second number sould be the date of yesterday
+        // First number should be the date of yesterday (before 11:35 am - 1 day) - 550 days
+        // Second number sould be the date of yesterday (before 11:35 am - 1 day)
         // Third number should be the station number (does not change)
-        path: "/produkt_nieder_tag_20221129_20240531_03668.txt";
+        path: "/produkt_nieder_tag_20221130_20240601_03668.txt";
     }
 
     block TempMoeFilePicker oftype FilePicker {
         // String has to be adapted to the following pattern (automation was not possible here):
-        // First number should be the date of yesterday - 550 days
-        // Second number sould be the date of yesterday
+        // First number should be the date of yesterday (before 11:35 am - 1 day) - 550 days
+        // Second number sould be the date of yesterday (before 11:35 am - 1 day)
         // Third number should be the station number (does not change)
-        path: "/produkt_klima_tag_20221129_20240531_01279.txt";
+        path: "/produkt_klima_tag_20221130_20240601_01279.txt";
     }
 
     block TempNueFilePicker oftype FilePicker {
         // String has to be adapted to the following pattern (automation was not possible here):
-        // First number should be the date of yesterday - 550 days
-        // Second number sould be the date of yesterday
+        // First number should be the date of yesterday (before 11:35 am - 1 day) - 550 days
+        // Second number sould be the date of yesterday (before 11:35 am - 1 day)
         // Third number should be the station number (does not change)
-        path: "/produkt_klima_tag_20221129_20240531_03668.txt";
+        path: "/produkt_klima_tag_20221130_20240601_03668.txt";
     }
 
     block PedestriansTextFileInterpreter oftype TextFileInterpreter {}
