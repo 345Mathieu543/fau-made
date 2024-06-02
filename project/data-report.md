@@ -47,3 +47,12 @@ For grading: If a proof of the email conversation is needed, please contact me.
 ![1](pics/plot1.png)
 ![2](pics/plot2.png)
 ![3](pics/plot3.png)
+
+Outliers:
+
+- 2022-11-21 - 2022-12-23: "Weihnachtsmarkt"
+- 2023-05-25 - 2023-06-05: "Bergkirchweih"
+- 2024-10-21: "Lange Nacht der Wissenschaft"
+- 2023-11-25 - 2023-12-23: "Weihnachtsmarkt"
+- 2023-05-16 - 2023-05-27: "Bergkirchweih"
+- 2023-05-30 - 2023-06-02: "Internationaler Comic Salon"
