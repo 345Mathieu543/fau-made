@@ -8,7 +8,7 @@ pipeline Pipeline {
 
     RainMoeHttpExtractor
         -> RainMoeArchiveInterpreter
-        -> RainMoeProductFilePicker
+        -> RainMoeFilePicker
         -> RainMoeTextFileInterpreter
         -> RainMoeCSVInterpreter
         -> RainMoeTableInterpreter
@@ -16,7 +16,7 @@ pipeline Pipeline {
     
     RainNueHttpExtractor
         -> RainNueArchiveInterpreter
-        -> RainNueProductFilePicker
+        -> RainNueFilePicker
         -> RainNueTextFileInterpreter
         -> RainNueCSVInterpreter
         -> RainNueTableInterpreter
@@ -24,7 +24,7 @@ pipeline Pipeline {
     
     TempMoeHttpExtractor
         -> TempMoeArchiveInterpreter
-        -> TempMoeProductFilePicker
+        -> TempMoeFilePicker
         -> TempMoeTextFileInterpreter
         -> TempMoeCSVInterpreter
         -> TempMoeTableInterpreter
@@ -32,14 +32,13 @@ pipeline Pipeline {
     
     TempNueHttpExtractor
         -> TempNueArchiveInterpreter
-        -> TempNueProductFilePicker
+        -> TempNueFilePicker
         -> TempNueTextFileInterpreter
         -> TempNueCSVInterpreter
         -> TempNueTableInterpreter
         -> TempNueSQLiteLoader;
 
     block PedestriansLocalFileExtractor oftype LocalFileExtractor {
-        // filePath: "csv_files/ped-erlangen-hauptstraße-20240101-20240513.csv";
         filePath: "csv_files/PedData.csv";
     }
 
@@ -75,19 +74,35 @@ pipeline Pipeline {
         archiveType: "zip";
     }
 
-    block RainMoeProductFilePicker oftype FilePicker {
+    block RainMoeFilePicker oftype FilePicker {
+        // String has to be adapted to the following pattern (automation was not possible here):
+        // First number should be the date of yesterday - 550 days
+        // Second number sould be the date of yesterday
+        // Third number should be the station number (does not change)
         path: "/produkt_nieder_tag_20221129_20240531_01279.txt";
     }
 
-    block RainNueProductFilePicker oftype FilePicker {
+    block RainNueFilePicker oftype FilePicker {
+        // String has to be adapted to the following pattern (automation was not possible here):
+        // First number should be the date of yesterday - 550 days
+        // Second number sould be the date of yesterday
+        // Third number should be the station number (does not change)
         path: "/produkt_nieder_tag_20221129_20240531_03668.txt";
     }
 
-    block TempMoeProductFilePicker oftype FilePicker {
+    block TempMoeFilePicker oftype FilePicker {
+        // String has to be adapted to the following pattern (automation was not possible here):
+        // First number should be the date of yesterday - 550 days
+        // Second number sould be the date of yesterday
+        // Third number should be the station number (does not change)
         path: "/produkt_klima_tag_20221129_20240531_01279.txt";
     }
 
-    block TempNueProductFilePicker oftype FilePicker {
+    block TempNueFilePicker oftype FilePicker {
+        // String has to be adapted to the following pattern (automation was not possible here):
+        // First number should be the date of yesterday - 550 days
+        // Second number sould be the date of yesterday
+        // Third number should be the station number (does not change)
         path: "/produkt_klima_tag_20221129_20240531_03668.txt";
     }
 
@@ -125,10 +140,7 @@ pipeline Pipeline {
         header: true;
         columns: [
             "timestamp" oftype integer,
-            "pedestrians_count" oftype integer,
-            // "time of measurement" oftype text,
-            // "weekday" oftype text,
-            // "pedestrians count" oftype integer
+            "pedestrians_count" oftype integer
         ];
     }
 
