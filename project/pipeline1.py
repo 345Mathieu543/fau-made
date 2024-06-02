@@ -3,16 +3,19 @@ import urllib.parse
 import json
 from datetime import datetime, timedelta
 import pandas as pd
-import os
 
 conn = http.client.HTTPSConnection("static.hystreet.com")
 
 # For grading please contact me and I will provide you with the correct API token.
 # The grenerated csv file is stored in the csv_files folder and can be used with older data as well.
 # In that case please comment the call of this script in the pipeline.sh file.
+
+apiKeyFile = open('hystreet.key', 'r')
+apiKey = apiKeyFile.readline().rstrip()
+
 headers = {
     'Content-Type': "application/json",
-    'X-API-Token': "YOUR_API_TOKEN"
+    'X-API-Token': apiKey
     }
 
 enddate = datetime.now() - timedelta(days=1)
