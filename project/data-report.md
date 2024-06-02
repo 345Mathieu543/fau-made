@@ -24,6 +24,46 @@ See license at heading 2.2 here: [https://www.dwd.de/DE/leistungen/opendata/faqs
 #### Structure and Quality
 <!-- What is the data structure and quality of your sources? (Compare lecture D01) -->
 
+The data from HyStreet is retrieved by an API request. The response is in JSON format.  
+The source provides a large amount of data, while in this project only the attributes 'timestamp' and 'pedestrians_count' were used and converted to a csv file which will be described later in the pipeline section.
+
+##### Data Structure
+
+- Timestamp: ISO 8601 format indicating the date and time.
+- Weather Condition: String describing the weather (e.g., "rain").
+- Temperature: Floating point number for the current temperature.
+- Min Temperature: Floating point number for the minimum temperature.
+- Pedestrians Count: Integer for the total number of pedestrians.
+- Unverified: Boolean indicating if the data is verified.
+- Details: Nested dictionary containing:
+  - Counts of pedestrians moving left-to-right (ltr) and right-to-left (rtl).
+  - Counts of adult and child pedestrians, further divided into ltr and rtl.
+  - A list of zones, each with its own pedestrian counts and demographics.
+- Incidents: List (empty in this case).
+- Permissions: List of access permissions.
+- GeoJSON: Dictionary representing geographic data in GeoJSON format.
+
+##### Data Quality
+
+The data quality can be assessed based on the dimensions discussed in the lecture D01:
+
+- Accuracy:
+  - Data appears accurate and detailed, with specific counts for various categories.
+  - Potentially verified by the *unverified* flag.
+- Completeness:
+  - Comprehensive data with detailed breakdowns.
+  - The *unverified* flag indicates potential gaps or unconfirmed data.
+- Consistency:
+  - Structured and consistent format across entries.
+  - Consistent use of temperature and pedestrian count units.
+- Timeliness:
+  - Recent data with timestamps indicating when the data was recorded.
+- Relevancy:
+  - Detailed information relevant to pedestrian and weather analysis.
+  - Breakdown by zones and demographic categories adds context and specificity.
+
+The HyStreet data source provides well-structured and detailed data, suitable for easy querying and in-depth analysis.
+
 #### Permission to use the data
 <!-- Describe the licenses of your data sources, why you are allowed to use the data and how you are planning to follow their obligations -->
 <!-- If your source data is under a standard open-data license just pointing out where to find that is enough information for being allowed to use it, please still describe how you plan to fulfill their obligations -->
