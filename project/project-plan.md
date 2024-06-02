@@ -18,30 +18,25 @@ Do temperature and rainfall negatively correlate with the number of people walki
 
 This data science project focuses on the relationship between weather conditions and pedestrian traffic in Erlangen's pedestrian zone. The primary question is whether temperature and rainfall have a negative correlation with the number of people walking in the area.
 
-This analysis will use historical weather data, including temperature and rainfall measurements, along with pedestrian traffic data from the beginning of 2024 through the end of May 2024. The data is filtered and prepared through a Jayvee pipeline before being displayed in graphs and analyzed. Since there is no public weather data source directly in Erlangen, an average between the two surrounding locations Möhrendorf-Kleinseebach and Nuremberg Airport is calculated to determine the weather in Erlangen.
+This analysis uses historical weather data, including temperature and rainfall measurements, along with pedestrian traffic data from yesterday to 550 days in the past. The data is collected, filtered, and prepared through Python and Jayvee pipelines before being displayed in graphs and analyzed. Since there is no public weather data source directly in Erlangen, an average between the two surrounding locations 'Möhrendorf-Kleinseebach' and 'Nürnberg Airport' is calculated to determine the weather in Erlangen.
 
-The significance of this project lies in understanding how weather affects pedestrian behavior, with implications for urban planning, traffic management, and retail strategies. Uncovering these relationships could potentially optimize urban layouts, improve infrastructure, and enhance the overall pedestrian experience.
-
-Through rigorous data analysis and interpretation, valuable insights can be provided to policymakers, urban planners, and businesses operating in pedestrian-heavy areas such as Erlangen's downtown. Ultimately, the goal is to contribute to more informed decision-making processes and create more resilient and adaptable urban environments.
+The significance of this project lies in understanding how weather affects pedestrian behavior, with implications for urban planning, traffic management, and retail strategies. Uncovering these relationships could potentially optimize urban layouts, improve infrastructure, and enhance the overall pedestrian experience. Ultimately, the goal is to contribute to more informed decision-making processes and create more resilient and adaptable urban environments.
 
 ## Datasources
 
 <!-- Describe each datasources you plan to use in a section. Use the prefic "DatasourceX" where X is the id of the datasource. -->
 
-### Datasource 1: [wetterkontor.de](https://www.wetterkontor.de)
+### Datasource 1: [opendata.dwd.de](https://opendata.dwd.de)
 
-"WetterKontor GmbH, based in Ingelheim am Rhein, was founded by former senior employees of Weathernews Germany and deals with the needs and interests of people with regard to the weather on a daily basis. We are present in the media every day: we are one of the leading developers of weather information for the print media in Germany." (translated citation from: [https://www.wetterkontor.de/de/ueberuns.asp](https://www.wetterkontor.de/de/ueberuns.asp))
+"The German Meteorological Service (DWD) is a higher federal authority within the portfolio of the Federal Ministry for Digital and Transport Affairs. It is responsible for meeting the meteorological requirements of all economic and social sectors in Germany. \[Their] tasks are based on a statutory information and research mandate, the German Weather Service Act." (translated citation from: [https://www.dwd.de/DE/derdwd/derdwd_node.html](https://www.dwd.de/DE/derdwd/derdwd_node.html))
 
-URLs, where data was downloaded from:
-
-* [Möhrendorf-Kleinseebach (01.01.2024 - 13.05.2024)](https://www.wetterkontor.de/de/wetter/deutschland/rueckblick.asp?id=P257&datum0=01.01.2024&datum1=13.05.2024&jr=2024&mo=5&datum=13.05.2024&t=8&part=0)
-* [Nuremberg Airport (01.01.2024 - 13.05.2024)](https://www.wetterkontor.de/de/wetter/deutschland/rueckblick.asp?id=124&datum0=01.01.2024&datum1=13.05.2024&jr=2024&mo=5&datum=13.05.2024&t=8&part=0)
+The required data (rainfall per day and average temperature per day) is split into two different ZIP archives per weather station. As mentioned above, the weather stations 'Möhrendorf-Kleinseebach' (ID: 01279) and 'Nürnberg Airport' (ID: 03668) are used. The average of the data is taken as the weather data for Erlangen, since it is geographically located in the middle.
 
 ### Datasource 2: [hystreet.com](https://www.hystreet.com)
 
 "Thanks to the laser technology used, we as a service provider are able to determine the exact pedestrian frequency in real time and make it available immediately. We attach great importance to absolute transparency and a clearly understandable methodology that is 100% data protection compliant." (translated citation from: [https://www.hystreet.com/](https://www.hystreet.com/))
 
-URL, where data was downloaded from: [Erlangen Hugenottenplatz (01.01.2024 - 13.05.2024)](https://hystreet.com/locations/142?from=2023-12-31T23%3A00%3A00.000Z&to=2024-05-13T23%3A00%3A00.000Z)
+This data source also provides some weather data, but we prefer to use the weather data from the German Weather Service. Furthermore, this project needs at least two data sources. So this data source will only be used to extract the number of pedestrians per day in the pedestrian zone of Erlangen.
 
 ## Work Packages
 
