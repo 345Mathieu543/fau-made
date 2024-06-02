@@ -21,16 +21,11 @@ The data from the "Deutscher Wetterdienst" is retrieved as a ZIP file. The text 
 
 ##### Data Structure (rain dataset)
 
-- STATIONS_ID: Station ID.
 - **MESS_DATUM**: Date of measurement.
-- QN_6: Quality level.
 - **RS**: Rainfall amount (mm).
-- RSF: Rainfall form (type).
-- SH_TAG: Snow height (cm).
-- NSH_TAG: New snow height (cm).
-- eor: End of record indicator.
+- ...
 
-*Only the bolt attributes were used for this project.*
+*Only attributes used for this project are listed.*
 
 ##### Data Quality (rain dataset)
 
@@ -42,27 +37,11 @@ The data from the "Deutscher Wetterdienst" is retrieved as a ZIP file. The text 
 
 ##### Data Structure (temperature dataset)
 
-- ONS_ID: Observation station ID.
 - **MESS_DATUM**: Date of measurement.
-- QN_3: Quality level 3.
-- FX: Maximum wind speed (m/s).
-- FM: Mean wind speed (m/s).
-- QN_4: Quality level 4.
-- RSK: Rainfall amount (mm).
-- RSKF: Rainfall form (type).
-- SDK: Sunshine duration (hours).
-- SHK_TAG: Snow height (cm).
-- NM: Cloud cover (1/8).
-- VPM: Vapor pressure (hPa).
-- PM: Air pressure (hPa).
 - **TMK**: Mean temperature (°C).
-- UPM: Relative humidity (%).
-- TXK: Maximum temperature (°C).
-- TNK: Minimum temperature (°C).
-- TGK: Ground minimum temperature (°C).
-- eor: End of record indicator.
+- ...
 
-*Only the bolt attributes were used for this project.*
+*Only attributes used for this project are listed.*
 
 ##### Data Quality (temperature dataset)
 
@@ -93,37 +72,18 @@ The source provides a large amount of data, while in this project only the attri
 ##### Data Structure
 
 - **Timestamp**: ISO 8601 format indicating the date and time.
-- Weather Condition: String describing the weather (e.g., "rain").
-- Temperature: Floating point number for the current temperature.
-- Min Temperature: Floating point number for the minimum temperature.
 - **Pedestrians Count**: Integer for the total number of pedestrians.
-- Unverified: Boolean indicating if the data is verified.
-- Details: Nested dictionary containing:
-  - Counts of pedestrians moving left-to-right (ltr) and right-to-left (rtl).
-  - Counts of adult and child pedestrians, further divided into ltr and rtl.
-  - A list of zones, each with its own pedestrian counts and demographics.
-- Incidents: List (empty in this case).
-- Permissions: List of access permissions.
-- GeoJSON: Dictionary representing geographic data in GeoJSON format.
+- ...
 
-*Only the bolt attributes were used for this project.*
+*Only attributes used for this project are listed.*
 
 ##### Data Quality
 
-- Accuracy:
-  - Data appears accurate and detailed, with specific counts for various categories.
-  - Potentially verified by the *unverified* flag.
-- Completeness:
-  - Comprehensive data with detailed breakdowns.
-  - The *unverified* flag indicates potential gaps or unconfirmed data.
-- Consistency:
-  - Structured and consistent format across entries.
-  - Consistent use of temperature and pedestrian count units.
-- Timeliness:
-  - Recent data with timestamps indicating when the data was recorded.
-- Relevancy:
-  - Detailed information relevant to pedestrian and weather analysis.
-  - Breakdown by zones and demographic categories adds context and specificity.
+- Accuracy: Data appears accurate and detailed, with specific counts for various categories. Potentially verified by the *unverified* flag.
+- Completeness: Comprehensive data with detailed breakdowns. The *unverified* flag indicates potential gaps or unconfirmed data.
+- Consistency: Structured and consistent format across entries and consistent use of temperature and pedestrian count units.
+- Timeliness: Recent data with timestamps indicating when the data was recorded.
+- Relevancy: Detailed information relevant to pedestrian and weather analysis. Breakdown by zones and demographic categories adds context and specificity.
 
 The HyStreet data source provides well-structured and detailed data, suitable for easy querying and in-depth analysis.
 
@@ -168,15 +128,22 @@ For grading: If a proof of the email conversation is needed, please contact me.
 <!-- What data format did you choose as the output of your pipeline and why -->
 <!-- Critically reflect on your data and any potential issues you anticipate for your final report -->
 
-![plot1.svg](pics/plot1.pdf)
-![plot2.svg](pics/plot2.pdf)
-![plot3.svg](pics/plot3.pdf)
+As this report is limited to 3 A4 pages, I am referring to the plots in the 'plots' folder instead of adding them to the report.
 
-Outliers:
+When analyzing the data, there are some outliers in the number of pedestrians. This is due to some special events that take place in Erlangen every year.
+
+This is the list of the events for the data between November 2022 and June 2024:
 
 - 2022-11-21 - 2022-12-23: "Weihnachtsmarkt"
 - 2023-05-25 - 2023-06-05: "Bergkirchweih"
-- 2024-10-21: "Lange Nacht der Wissenschaft"
+- 2023-10-21: "Lange Nacht der Wissenschaft"
 - 2023-11-25 - 2023-12-23: "Weihnachtsmarkt"
-- 2023-05-16 - 2023-05-27: "Bergkirchweih"
-- 2023-05-30 - 2023-06-02: "Internationaler Comic Salon"
+- 2024-05-16 - 2024-05-27: "Bergkirchweih"
+- 2024-05-30 - 2024-06-02: "Internationaler Comic Salon"
+
+<!-- result -->
+<!-- limitation -->
+
+<!-- ![plot1.svg](plots/plot1.pdf) -->
+<!-- ![plot2.svg](plots/plot2.pdf) -->
+<!-- ![plot3.svg](plots/plot3.pdf) -->
