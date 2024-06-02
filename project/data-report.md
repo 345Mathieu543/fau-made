@@ -2,29 +2,43 @@
 
 ## Question
 <!-- Your question for your whole project -->
+Do temperature and rainfall negatively correlate with the number of people walking through the pedestrian zone in Erlangen?
 
 ## Data Sources
 <!-- Describe your data sources: Why you have chosen them, where they are from, and what data they contain -->
+This analysis uses historical weather data, including temperature and rainfall measurements, along with pedestrian traffic data from yesterday to 550 days in the past. The data is collected, filtered, and prepared through Python and Jayvee pipelines before being displayed in graphs and analyzed. Since there is no public weather data source directly in Erlangen, an average between the two surrounding locations 'Möhrendorf-Kleinseebach' and 'Nürnberg Airport' is calculated to determine the weather in Erlangen.
 
 ### Datasource 1: [opendata.dwd.de](https://opendata.dwd.de)
+
+#### Structure and Quality
 <!-- What is the data structure and quality of your sources? (Compare lecture D01) -->
+
+#### Permission to use the data
 <!-- Describe the licenses of your data sources, why you are allowed to use the data and how you are planning to follow their obligations -->
 <!-- If your source data is under a standard open-data license just pointing out where to find that is enough information for being allowed to use it, please still describe how you plan to fulfill their obligations -->
+
+See license at heading 2.2 here: [https://www.dwd.de/DE/leistungen/opendata/faqs_opendata.html](https://www.dwd.de/DE/leistungen/opendata/faqs_opendata.html)
 
 ### Datasource 2: [hystreet.com](https://www.hystreet.com)
+
+#### Structure and Quality
 <!-- What is the data structure and quality of your sources? (Compare lecture D01) -->
+
+#### Permission to use the data
 <!-- Describe the licenses of your data sources, why you are allowed to use the data and how you are planning to follow their obligations -->
 <!-- If your source data is under a standard open-data license just pointing out where to find that is enough information for being allowed to use it, please still describe how you plan to fulfill their obligations -->
 
-## Data Pipeline
+See permission to use the data at heading 4 here: [https://hystreet.com/agb](https://hystreet.com/agb)
+Additionally the permission was grantet per email, to use the data from the last 3 years of the location 'Erlangen'.
+For grading: If a proof of the email conversation is needed, please contact me.
 
+## Data Pipeline
 <!-- Describe your data pipeline on a high level, which technology did you use to implement it -->
 <!-- Which transformation or cleaning steps did you do and why? -->
 <!-- What problems did you encounter and how did you solve them? -->
 <!-- Describe how your pipeline deals with errors or changing input data -->
 
 ## Result and Limitations
-
 <!-- Describe the output data of your data pipeline -->
 <!-- What is the data structure and quality of your result? (Compare lecture D01) -->
 <!-- What data format did you choose as the output of your pipeline and why -->
