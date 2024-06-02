@@ -12,7 +12,7 @@ con = sqlite3.connect("../data/data.sqlite")
 p = con.cursor()
 p.execute('''
 CREATE TABLE data (
-    date INTEGER,
+    date TEXT,
     pedestrians INTEGER,
     rain REAL,
     temp REAL
