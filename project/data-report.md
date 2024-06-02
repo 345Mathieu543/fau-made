@@ -13,6 +13,57 @@ This analysis uses historical weather data, including temperature and rainfall m
 #### Structure and Quality
 <!-- What is the data structure and quality of your sources? (Compare lecture D01) -->
 
+The data from the "Deutscher Wetterdienst" is retrieved as a ZIP file. The text file containing the data is structured like a CSV file with ";" as separator. Unfortunately, it is filled with spaces to align the content and facilitate human readability. For the automatic data pipeline this was an obstacle that had to be handled.
+
+##### Data Structure (rain dataset)
+
+- STATIONS_ID: Station ID.
+- MESS_DATUM: Date of measurement.
+- QN_6: Quality level.
+- RS: Rainfall amount (mm).
+- RSF: Rainfall form (type).
+- SH_TAG: Snow height (cm).
+- NSH_TAG: New snow height (cm).
+- eor: End of record indicator.
+
+##### Data Quality (rain dataset)
+
+- Accuracy: High, given the structured format and clear measurement units.
+- Completeness: Full dataset with no missing values in sample.
+- Consistency: Consistent data points across records.
+- Timeliness: Regular daily measurements.
+- Relevancy: Relevant for weather analysis and trend tracking.
+
+##### Data Structure (temperature dataset)
+
+- ONS_ID: Observation station ID.
+- MESS_DATUM: Date of measurement.
+- QN_3: Quality level 3.
+- FX: Maximum wind speed (m/s).
+- FM: Mean wind speed (m/s).
+- QN_4: Quality level 4.
+- RSK: Rainfall amount (mm).
+- RSKF: Rainfall form (type).
+- SDK: Sunshine duration (hours).
+- SHK_TAG: Snow height (cm).
+- NM: Cloud cover (1/8).
+- VPM: Vapor pressure (hPa).
+- PM: Air pressure (hPa).
+- TMK: Mean temperature (°C).
+- UPM: Relative humidity (%).
+- TXK: Maximum temperature (°C).
+- TNK: Minimum temperature (°C).
+- TGK: Ground minimum temperature (°C).
+- eor: End of record indicator.
+
+##### Data Quality (temperature dataset)
+
+- Accuracy: Detailed and precise with multiple weather parameters.
+- Completeness: Comprehensive dataset with no apparent missing values.
+- Consistency: Uniform data collection standards.
+- Timeliness: Daily observations ensuring up-to-date records.
+- Relevancy: Highly relevant for detailed weather and climate studies.
+
 #### Permission to use the data
 <!-- Describe the licenses of your data sources, why you are allowed to use the data and how you are planning to follow their obligations -->
 <!-- If your source data is under a standard open-data license just pointing out where to find that is enough information for being allowed to use it, please still describe how you plan to fulfill their obligations -->
@@ -45,8 +96,6 @@ The source provides a large amount of data, while in this project only the attri
 
 ##### Data Quality
 
-The data quality can be assessed based on the dimensions discussed in the lecture D01:
-
 - Accuracy:
   - Data appears accurate and detailed, with specific counts for various categories.
   - Potentially verified by the *unverified* flag.
@@ -68,8 +117,8 @@ The HyStreet data source provides well-structured and detailed data, suitable fo
 <!-- Describe the licenses of your data sources, why you are allowed to use the data and how you are planning to follow their obligations -->
 <!-- If your source data is under a standard open-data license just pointing out where to find that is enough information for being allowed to use it, please still describe how you plan to fulfill their obligations -->
 
-See permission to use the data at heading 4 here: [https://hystreet.com/agb](https://hystreet.com/agb)
-Additionally the permission was grantet per email, to use the data from the last 3 years of the location 'Erlangen'.
+See permission to use the data at heading 4 here: [https://hystreet.com/agb](https://hystreet.com/agb)  
+Additionally the permission was granted per email, to use the data from the last 3 years of the location 'Erlangen'.
 For grading: If a proof of the email conversation is needed, please contact me.
 
 ## Data Pipeline
@@ -77,6 +126,25 @@ For grading: If a proof of the email conversation is needed, please contact me.
 <!-- Which transformation or cleaning steps did you do and why? -->
 <!-- What problems did you encounter and how did you solve them? -->
 <!-- Describe how your pipeline deals with errors or changing input data -->
+
+### Pipeline 1
+
+- API Call
+- Timezone
+- Filter JSON
+- Convert JSON to CSV
+
+### Pipeline 2
+
+- Load CSV
+- Retrieve 4 ZIP files
+- Manually changing file names (dates in it are changing)
+- put everything into sqlite database
+
+### Pipeline 3
+
+- Calculating rain and temperature averages for all entries of the two weather data locations
+- Write the prepared data into new table
 
 ## Result and Limitations
 <!-- Describe the output data of your data pipeline -->
