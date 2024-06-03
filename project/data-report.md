@@ -103,24 +103,19 @@ For grading: If a proof of the email conversation is needed, please contact me.
 <!-- What problems did you encounter and how did you solve them? -->
 <!-- Describe how your pipeline deals with errors or changing input data -->
 
-### Pipeline 1
+The pipeline script "pipeline.sh" deletes the database, if it already exists and triggers three sub-pipelines, which are described below.
 
-- API Call
-- Timezone
-- Filter JSON
-- Convert JSON to CSV
+### Pipeline 1 ("pipeline1.py")
 
-### Pipeline 2
+The first pipeline handles the API call to retrieve the data from HySteet. To get the data for a specific time period, a "from" and "to" date must be specified. In addition, this date must be in UTC format. The "to" date is calculated as the last second of the previous day and the "from" date is the first second of the 550th day before the "to" date. The API request returns the requested data in JSON format. Because not all attributes are needed for this project, the returned JSON is filtered. The JSON data is then converted to CSV format and exported to a file that is accessed in the next sub-pipeline. For this pipeline, Python was used because it provides many useful libraries for the challenges described above.
 
-- Load CSV
-- Retrieve 4 ZIP files
-- Manually changing file names (dates in it are changing)
-- put everything into sqlite database
+### Pipeline 2 ("pipeline2.jv")
 
-### Pipeline 3
+The second pipeline is written in Jayvee. It loads the CSV file with the pedestrian data and downloads the four ZIP files with the rain and temperature data from the provider's website. The datasets are all from the previous day to the 550 days in the past. That's why these dates were calculated in the first pipeline for the API call. The different datasets can then be easily merged in the third pipeline. Unfortunately, the filenames of the data files inside the downloaded ZIP files contain the dates, and Jayvee does not allow wildcards in path strings. That's why the hardcoded filenames need to be adjusted at about 11:40 CET (when the new data is released) to get the pipeline working. After filtering for the relevant columns, the five datasets are loaded into a SQLite database.
 
-- Calculating rain and temperature averages for all entries of the two weather data locations
-- Write the prepared data into new table
+### Pipeline 3 ("pipeline3.py")
+
+The third pipeline again uses Python to execute SQL statements in the database created earlier. In order to have all the necessary data in one place for easier analysis, a new empty table is created in the database. As mentioned before, the average of the two rain and temperature datasets needs to be calculated. This was done using temporary views, merging all together with the pedestrian data and inserting everything into the new empty table. The data can now be easily analyzed.
 
 ## Result and Limitations
 <!-- Describe the output data of your data pipeline -->
