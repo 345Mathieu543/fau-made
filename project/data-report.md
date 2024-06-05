@@ -123,11 +123,45 @@ The third pipeline again uses Python to execute SQL statements in the database c
 <!-- What data format did you choose as the output of your pipeline and why -->
 <!-- Critically reflect on your data and any potential issues you anticipate for your final report -->
 
-As this report is limited to 3 A4 pages, I am referring to the plots in the 'plots' folder instead of adding them to the report.
+### Output data of the pipeline
 
-When analyzing the data, there are some outliers in the number of pedestrians. This is due to some special events that take place in Erlangen every year.
+The output data of the pipeline is a single SQLite database, with a table that combines pedestrian traffic data with averaged weather data (temperature and rainfall) for the corresponding days. The data spans from yesterday to 550 days in the past, providing a comprehensive dataset for analysis.
 
-This is the list of the events for the data between November 2022 and June 2024:
+### Data Structure
+
+- Date: Date of the measurement.
+- Pedestrian Count: Number of people walking through the pedestrian zone in Erlangen.
+- Average Temperature: Mean temperature in Erlangen (°C), averaged from the surrounding locations.
+- Average Rainfall: Rainfall amount in Erlangen (mm), averaged from the surrounding locations.
+
+### Data Quality
+
+- Accuracy: High, given the structured and detailed nature of the source data.
+- Completeness: The dataset is complete with no missing values in the sample provided.
+- Consistency: Data points are consistently recorded across all days in the dataset.
+- Timeliness: Regular daily measurements ensure up-to-date records.
+- Relevancy: High, for analyzing the relationship between weather conditions and pedestrian traffic.
+
+### Reflection on the data
+
+The data is comprehensive and relevant for the analysis of the correlation between weather conditions and pedestrian traffic. However, there are a few potential limitations:
+
+- Temporal Resolution: Daily aggregates of weather data and pedestrian counts might obscure more granular patterns (e.g., hourly variations).
+- Spatial Averaging: Averaging weather data from two locations may not perfectly represent the actual weather in Erlangen, potentially introducing some bias.
+- Data Update Timing: The necessity to adjust the hardcoded filenames in the pipeline to accommodate new data releases can introduce delays or errors if not managed correctly.
+
+### Potential issues for the final report
+
+- Data Integration: Ensuring seamless integration and synchronization of data from different sources can be challenging.
+- Data Averaging: The averaging method for weather data from surrounding locations could be questioned for its accuracy in reflecting actual conditions in Erlangen.
+- Pipeline Robustness: The need for manual adjustments in the pipeline could affect its robustness and reproducibility. Automating this process or finding a workaround would be beneficial.
+- Analysis Limitations: The correlation analysis may be limited by the data resolution and potential biases introduced by the averaging process. Addressing these limitations in the report will be crucial for transparency and reliability of the findings.
+
+### Early insight to the results
+
+As this report should not exceed three A4 pages, I am only referring to the plots in the folder "plots".
+
+When analyzing the data, there are some outliers in the number of pedestrians. This is due to some special events that take place in Erlangen every year. This is the list of the events for the data between November 2022 and June 2024:
 
 - 2022-11-21 - 2022-12-23: "Weihnachtsmarkt"
 - 2023-05-25 - 2023-06-05: "Bergkirchweih"
@@ -136,9 +170,8 @@ This is the list of the events for the data between November 2022 and June 2024:
 - 2024-05-16 - 2024-05-27: "Bergkirchweih"
 - 2024-05-30 - 2024-06-02: "Internationaler Comic Salon"
 
-<!-- result -->
-<!-- limitation -->
-
 <!-- ![plot1.svg](plots/plot1.pdf) -->
 <!-- ![plot2.svg](plots/plot2.pdf) -->
 <!-- ![plot3.svg](plots/plot3.pdf) -->
+
+As those plots are saved as vector graphics you can zoom in to see all details.
