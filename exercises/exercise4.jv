@@ -1,0 +1,76 @@
+pipeline Pipeline {
+
+    mowestaHttpExtractor
+        -> mowestaArchiveInterpreter
+        -> mowestaFilePicker
+        -> mowestaTextFileInterpreter
+        -> mowestaCSVInterpreter
+        -> mowestaColumnDeleter
+        -> mowestaCellWriter
+        -> mowestaTableInterpreter
+        -> mowestaTransformer1
+        -> mowestaTransformer2
+        -> mowestaSQLiteLoader;
+
+    block mowestaHttpExtractor oftype HttpExtractor {
+        url: "https://www.mowesta.com/data/measure/mowesta-dataset-20221107.zip";
+    }
+
+    block mowestaArchiveInterpreter oftype ArchiveInterpreter {
+        archiveType: "zip";
+    }
+
+    block mowestaFilePicker oftype FilePicker {
+        path: "/data.csv";
+    }
+
+    block mowestaTextFileInterpreter oftype TextFileInterpreter {}
+
+    block mowestaCSVInterpreter oftype CSVInterpreter {
+        delimiter: ";";
+    }
+
+    block mowestaColumnDeleter oftype ColumnDeleter {
+        delete: [column F, column G, column H, column I ];
+    }
+
+    block mowestaCellWriter oftype CellWriter {
+        at: range A1:F1;
+        write: ["id", "producer", "model", "month", "temperature", "battery_temperature"];
+    }
+
+    block mowestaTableInterpreter oftype TableInterpreter {
+        header: true;
+        columns: [
+            "id" oftype integer,
+            "producer" oftype text,
+            "model" oftype text,
+            "month" oftype integer,
+            "temperature" oftype decimal,
+            "battery_temperature" oftype decimal
+        ];
+    }
+
+    transform CelsiusToFahrenheit {
+        from Celsius oftype decimal;
+        to Fahrenheit oftype decimal;
+        Fahrenheit: (Celsius * 9/5) + 32;
+    }
+
+    block mowestaTransformer1 oftype TableTransformer {
+        inputColumns: ['temperature'];
+        outputColumn: 'temperature';
+        use: CelsiusToFahrenheit;
+    }
+
+    block mowestaTransformer2 oftype TableTransformer {
+        inputColumns: ['battery_temperature'];
+        outputColumn: 'battery_temperature';
+        use: CelsiusToFahrenheit;
+    }
+
+    block mowestaSQLiteLoader oftype SQLiteLoader {
+        table: "temperatures";
+        file: "../data/temperatures.sqlite";
+    }
+}
