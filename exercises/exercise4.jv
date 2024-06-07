@@ -71,6 +71,6 @@ pipeline Pipeline {
 
     block mowestaSQLiteLoader oftype SQLiteLoader {
         table: "temperatures";
-        file: "../data/temperatures.sqlite";
+        file: "temperatures.sqlite";
     }
 }
