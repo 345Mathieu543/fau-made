@@ -39,13 +39,30 @@ pipeline Pipeline {
         write: ["id", "producer", "model", "month", "temperature", "battery_temperature"];
     }
 
+    valuetype posInteger oftype integer {
+        constraints: [ posIntegerConstraint ];
+    }
+
+    constraint posIntegerConstraint oftype RangeConstraint {
+        lowerBound: 1;
+    }
+
+    valuetype month oftype integer {
+        constraints: [ posIntegerConstraint ];
+    }
+
+    constraint monthConstraint oftype RangeConstraint {
+        lowerBound: 1;
+        upperBound: 12;
+    }
+
     block mowestaTableInterpreter oftype TableInterpreter {
         header: true;
         columns: [
-            "id" oftype integer,
+            "id" oftype posInteger,
             "producer" oftype text,
             "model" oftype text,
-            "month" oftype integer,
+            "month" oftype month,
             "temperature" oftype decimal,
             "battery_temperature" oftype decimal
         ];
