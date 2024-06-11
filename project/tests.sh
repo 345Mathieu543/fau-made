@@ -1,1 +1,3 @@
-# calls all tests in the project
+#!/bin/bash
+cd $(dirname "$0")
+python3 ./tests.py
