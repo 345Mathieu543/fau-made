@@ -42,3 +42,5 @@ jobs:
     #     id: inst_deps
     #     run: "pip install -r ./main/project/requirements.txt"
 
+      - name: Run Test Script
+        run: "./main/project/test.sh"
