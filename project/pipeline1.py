@@ -4,6 +4,7 @@ import json
 from datetime import datetime, timedelta, timezone
 import pytz
 import pandas as pd
+import re
 
 conn = http.client.HTTPSConnection("static.hystreet.com")
 
@@ -50,3 +51,42 @@ data_extracted = [
 
 df = pd.DataFrame(data_extracted)
 df.to_csv('csv_files/PedData.csv', encoding='utf-8', index=False, sep=';')
+
+print("Data extracted and saved to csv file.")
+
+
+# Preparation of the pipeline2.jv file
+
+# Define the pattern to match
+pattern = r'(?<=(nieder|_klima)_tag_).*_.*(?=_[0-9]{5}\.txt)'
+
+
+# Define the replacement string
+
+# Get the current time in CET
+current_time = cet.localize(datetime.now())
+
+# Check if the current time is earlier than 11:35 am
+cutoff_time = cet.localize(datetime.combine(current_time.date(), datetime.min.time())) + timedelta(hours=11, minutes=35)
+if current_time < cutoff_time:
+    startdate -= timedelta(days=1)
+    enddate -= timedelta(days=1)
+newstart = cet.localize(startdate).strftime("%Y%m%d")
+newend = cet.localize(enddate).strftime("%Y%m%d")
+replacement = f'{newstart}_{newend}'
+print(replacement)
+
+# Read the content of the file
+file_path = 'pipeline2.jv'
+with open(file_path, 'r') as file:
+    content = file.read()
+
+# Replace the matched strings
+modified_content = re.sub(pattern, replacement, content)
+
+# Write the modified content back to the file
+with open(file_path, 'w') as file:
+    file.write(modified_content)
+
+print("File content has been modified successfully.")
+
