@@ -1,6 +1,6 @@
 # Data Report
 <!-- generate pdf with the following command -->
-<!-- pandoc data-report.md -o data-report.pdf -V papersize:a4 -V geometry:margin=2.5cm -->
+<!-- pandoc data-report.md -o data-report.pdf -V papersize:a4 -V geometry:margin=2cm -->
 
 ## Question
 <!-- Your question for your whole project -->
@@ -107,11 +107,13 @@ The pipeline script "pipeline.sh" deletes the database, if it already exists and
 
 ### Pipeline 1 ("pipeline1.py")
 
-The first pipeline handles the API call to retrieve the data from HySteet. To get the data for a specific time period, a "from" and "to" date must be specified. In addition, this date must be in UTC format. The "to" date is calculated as the last second of the previous day and the "from" date is the first second of the 550th day before the "to" date. The API request returns the requested data in JSON format. Because not all attributes are needed for this project, the returned JSON is filtered. The JSON data is then converted to CSV format and exported to a file that is accessed in the next sub-pipeline. For this pipeline, Python was used because it provides many useful libraries for the challenges described above.
+The first pipeline handles the API call to retrieve the data from HySteet. To get the data for a specific time period, a "from" and "to" date must be specified. In addition, this date must be in UTC format. The "to" date is calculated as the last second of the previous day and the "from" date is the first second of the 550th day before the "to" date. The API request returns the requested data in JSON format. Because not all attributes are needed for this project, the returned JSON is filtered. The JSON data is then converted to CSV format and exported to a file that is accessed in the next sub-pipeline.  
+The filenames from the weather data source are changing every day at around 11:30 am CET (when the new data is being released). In order to make the pipeline work automatically, the filename strings are being adapted by the second part of this pipeline. **Caution:** Between 11:25 and 11:35 it is likely that the pipeline crashes, depending on the exact release time of the updated weather data.  
+For this pipeline, Python was used because it provides many useful libraries for the challenges described above.
 
 ### Pipeline 2 ("pipeline2.jv")
 
-The second pipeline is written in Jayvee. It loads the CSV file with the pedestrian data and downloads the four ZIP files with the rain and temperature data from the provider's website. The datasets are all from the previous day to the 550 days in the past. That's why these dates were calculated in the first pipeline for the API call. The different datasets can then be easily merged in the third pipeline. Unfortunately, the filenames of the data files inside the downloaded ZIP files contain the dates, and Jayvee does not allow wildcards in path strings. That's why the hardcoded filenames need to be adjusted at about 11:40 CET (when the new data is released) to get the pipeline working. After filtering for the relevant columns, the five datasets are loaded into a SQLite database.
+The second pipeline is written in Jayvee. It loads the CSV file with the pedestrian data and downloads the four ZIP files with the rain and temperature data from the provider's website. The datasets are all from the previous day to the 550 days in the past. That's why these dates were calculated in the first pipeline for the API call. The different datasets can then be easily merged in the third pipeline. After filtering for the relevant columns, the five datasets are loaded into a SQLite database.
 
 ### Pipeline 3 ("pipeline3.py")
 
@@ -174,4 +176,4 @@ When analyzing the data, there are some outliers in the number of pedestrians. T
 <!-- ![plot2.svg](plots/plot2.pdf) -->
 <!-- ![plot3.svg](plots/plot3.pdf) -->
 
-As those plots are saved as vector graphics you can zoom in to see all details.
+Because these plots are saved as vector graphics, you can zoom in to see all the details.
