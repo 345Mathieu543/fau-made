@@ -33,8 +33,8 @@ def save_to_csv(data, file_path):
     df.to_csv(file_path, encoding='utf-8', index=False, sep=';')
 
 def adjust_dates_if_needed(startdate, enddate, cet):
-    current_time = cet.localize(datetime.now())
-    cutoff_time = cet.localize(datetime.combine(current_time.date(), datetime.min.time())) + timedelta(hours=11, minutes=35)
+    current_time = datetime.now(pytz.timezone('CET'))
+    cutoff_time = datetime.combine(current_time.date(), datetime.min.time()).replace(tzinfo=pytz.timezone('CET')) + timedelta(hours=11, minutes=35)
     if current_time < cutoff_time:
         startdate -= timedelta(days=1)
         enddate -= timedelta(days=1)
