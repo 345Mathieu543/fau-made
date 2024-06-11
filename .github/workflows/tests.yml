@@ -43,4 +43,4 @@ jobs:
     #     run: "pip install -r ./main/project/requirements.txt"
 
       - name: Run Test Script
-        run: "./main/project/test.sh"
+        run: "./main/project/tests.sh"
