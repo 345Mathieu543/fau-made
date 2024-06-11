@@ -45,3 +45,5 @@ FROM pedestrians pd
 JOIN RainData rd ON pd.timestamp = rd.date
 JOIN TempData td ON pd.timestamp = td.date;
 ''')
+
+print("[Pipeline3] Table 'data' has been created and the pedestrians data merged with the averaged weather data has been inserted.")
