@@ -1,4 +1,4 @@
-pipeline Pipeline {
+pipeline Pipeline2 {
 
     PedestriansLocalFileExtractor
         -> PedestriansTextFileInterpreter
