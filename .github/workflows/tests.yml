@@ -8,7 +8,7 @@ on:
       - project/**
 
 jobs:
-  exercise-feedback:
+  project-tests:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
