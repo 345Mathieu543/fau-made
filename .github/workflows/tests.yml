@@ -9,6 +9,7 @@ on:
 
 jobs:
   project-tests:
+    environment: "Project_Deployment"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -32,6 +33,12 @@ jobs:
       - name: Install Python Modules
         working-directory: ./main/project
         run: "pip install -r requirements.txt"
+
+      - name: Save API Key to temp file
+        working-directory: 
+        run: printf $DEV_ENV_FILE >> ./main/project/hystreet.key
+        env:
+          DEV_ENV_FILE : ${{secrets.HYSTREET_API_KEY}}
 
       - name: Run Test Script
         working-directory: ./main/project
