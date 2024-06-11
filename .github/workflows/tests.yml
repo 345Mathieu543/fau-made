@@ -16,31 +16,22 @@ jobs:
         with:
           path: main
 
-    #   - name: Checkout exercise feedback
-    #     uses: actions/checkout@v3
-    #     with:
-    #       repository: jvalue/made-exercise-feedback
-    #       path: grading
-
       - name: Set up Node
         uses: actions/setup-node@v3
         with:
           node-version: "lts/*"
 
-      # Install jayvee
       - name: Set up Jayvee
         run: "npm i -g @jvalue/jayvee-interpreter@0.4.0"
 
-      # Install python
       - name: Set up Python 3.11
         uses: actions/setup-python@v4
         with:
           python-version: 3.11
 
-      # Install Python Dependencies
-    #   - name: Install Python Dependencies
-    #     id: inst_deps
-    #     run: "pip install -r ./main/project/requirements.txt"
+      - name: Install Python Modules
+        working-directory: ./main/project
+        run: "pip install -r requirements.txt"
 
       - name: Run Test Script
         working-directory: ./main/project
