@@ -1,92 +1,88 @@
-import http.client
-import urllib.parse
-import json
-from datetime import datetime, timedelta, timezone
-import pytz
+from datetime import datetime, timedelta
 import pandas as pd
+import urllib.parse
+import http.client
+import json
+import pytz
 import re
 
-conn = http.client.HTTPSConnection("static.hystreet.com")
+def get_api_key(file_path):
+    with open(file_path, 'r') as file:
+        return file.readline().rstrip()
 
-# For grading please contact me and I will provide you with the correct API token.
-# The grenerated csv file is stored in the csv_files folder and can be used with older data as well.
-# In that case please comment the call of this script in the pipeline.sh file.
+def fetch_data(start, end, headers):
+    conn = http.client.HTTPSConnection("static.hystreet.com")
+    body = f"from={start}&to={end}&resolution=day"
+    conn.request("GET", f"/api/https://api.hystreet.com/locations/142?{body}", headers=headers)
+    res = conn.getresponse()
+    return res.read()
 
-apiKeyFile = open('hystreet.key', 'r')
-apiKey = apiKeyFile.readline().rstrip()
+def parse_data(data):
+    parsed = json.loads(data.decode("utf-8"))
+    measurements = parsed['measurements']
+    return [
+        {
+            "timestamp": datetime.fromisoformat(entry["timestamp"][:-6]).strftime("%Y%m%d"),
+            "pedestrians_count": entry["pedestrians_count"]
+        }
+        for entry in measurements
+    ]
 
-headers = {
-    'Content-Type': "application/json",
-    'X-API-Token': apiKey
+def save_to_csv(data, file_path):
+    df = pd.DataFrame(data)
+    df.to_csv(file_path, encoding='utf-8', index=False, sep=';')
+
+def adjust_dates_if_needed(startdate, enddate, cet):
+    current_time = cet.localize(datetime.now())
+    cutoff_time = cet.localize(datetime.combine(current_time.date(), datetime.min.time())) + timedelta(hours=11, minutes=35)
+    if current_time < cutoff_time:
+        startdate -= timedelta(days=1)
+        enddate -= timedelta(days=1)
+    return startdate, enddate
+
+def update_file(file_path, pattern, replacement):
+    with open(file_path, 'r') as file:
+        content = file.read()
+    modified_content = re.sub(pattern, replacement, content)
+    with open(file_path, 'w') as file:
+        file.write(modified_content)
+
+def main():
+
+    # Fetching the pedestrians data from the API
+    
+    headers = {
+        'Content-Type': "application/json",
+        'X-API-Token': get_api_key('hystreet.key')
     }
+    
+    cet = pytz.timezone("CET")
+    enddate = datetime.now() - timedelta(days=1)
+    startdate = enddate - timedelta(days=549)
+    
+    start = urllib.parse.quote_plus(cet.localize(startdate.replace(hour=0, minute=0, second=0)).strftime("%Y-%m-%dT%H:%M:%S%z"))
+    end = urllib.parse.quote_plus(cet.localize(enddate.replace(hour=23, minute=59, second=59)).strftime("%Y-%m-%dT%H:%M:%S%z"))
+    
+    # print(f"Start date: {start}")
+    # print(f"End date: {end}")
+    
+    data = fetch_data(start, end, headers)
+    data_extracted = parse_data(data)
+    save_to_csv(data_extracted, 'csv_files/PedData.csv')
+    
+    print("[Pipeline1] Pedestrians data extracted and saved to 'csv_files/PedData.csv'.")
+    
+    # Preparation of the pipeline2.jv file
+    pattern = r'(?<=(nieder|_klima)_tag_).*_.*(?=_[0-9]{5}\.txt)'
+    startdate, enddate = adjust_dates_if_needed(startdate, enddate, cet)
+    newstart = cet.localize(startdate).strftime("%Y%m%d")
+    newend = cet.localize(enddate).strftime("%Y%m%d")
+    replacement = f'{newstart}_{newend}'
+    # print(replacement)
+    
+    update_file('pipeline2.jv', pattern, replacement)
+    
+    print("[Pipeline1] Filenames for 'pipeline2.jv' have been adapted successfully.")
 
-cet = pytz.timezone("CET")
-
-enddate = datetime.now() - timedelta(days=1)
-startdate = enddate - timedelta(days=549)
-
-start = urllib.parse.quote_plus(cet.localize(startdate.replace(hour=0, minute=0, second=0)).strftime("%Y-%m-%dT%H:%M:%S%z"))
-end = urllib.parse.quote_plus(cet.localize(enddate.replace(hour=23, minute=59, second=59)).strftime("%Y-%m-%dT%H:%M:%S%z"))
-
-print(f"Start date: {start}")
-print(f"End date: {end}")
-
-body = f"from={start}&to={end}&resolution=day"
-
-conn.request("GET", f"/api/https://api.hystreet.com/locations/142?{body}", headers=headers)
-
-res = conn.getresponse()
-data = res.read()
-
-parsed = json.loads(data.decode("utf-8"))
-measurements = parsed['measurements']
-
-data_extracted = [
-    {
-        "timestamp": datetime.fromisoformat(entry["timestamp"][:-6]).strftime("%Y%m%d"),
-        "pedestrians_count": entry["pedestrians_count"]
-    }
-    for entry in measurements
-]
-
-df = pd.DataFrame(data_extracted)
-df.to_csv('csv_files/PedData.csv', encoding='utf-8', index=False, sep=';')
-
-print("Data extracted and saved to csv file.")
-
-
-# Preparation of the pipeline2.jv file
-
-# Define the pattern to match
-pattern = r'(?<=(nieder|_klima)_tag_).*_.*(?=_[0-9]{5}\.txt)'
-
-
-# Define the replacement string
-
-# Get the current time in CET
-current_time = cet.localize(datetime.now())
-
-# Check if the current time is earlier than 11:35 am
-cutoff_time = cet.localize(datetime.combine(current_time.date(), datetime.min.time())) + timedelta(hours=11, minutes=35)
-if current_time < cutoff_time:
-    startdate -= timedelta(days=1)
-    enddate -= timedelta(days=1)
-newstart = cet.localize(startdate).strftime("%Y%m%d")
-newend = cet.localize(enddate).strftime("%Y%m%d")
-replacement = f'{newstart}_{newend}'
-print(replacement)
-
-# Read the content of the file
-file_path = 'pipeline2.jv'
-with open(file_path, 'r') as file:
-    content = file.read()
-
-# Replace the matched strings
-modified_content = re.sub(pattern, replacement, content)
-
-# Write the modified content back to the file
-with open(file_path, 'w') as file:
-    file.write(modified_content)
-
-print("File content has been modified successfully.")
-
+if __name__ == "__main__":
+    main()
