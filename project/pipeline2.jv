@@ -75,34 +75,34 @@ pipeline Pipeline2 {
     }
 
     block RainMoeFilePicker oftype FilePicker {
-        // String has to be adapted to the following pattern (automation was not possible here):
+        // String gets adapted automatically to the following pattern by 'pipeline1.py':
         // First number should be the date of yesterday (before 11:35 am - 1 day) - 550 days
         // Second number sould be the date of yesterday (before 11:35 am - 1 day)
-        // Third number should be the station number (does not change)
+        // Third number is be the weather station number (does not change)
         path: "/produkt_nieder_tag_20221208_20240609_01279.txt";
     }
 
     block RainNueFilePicker oftype FilePicker {
-        // String has to be adapted to the following pattern (automation was not possible here):
+        // String gets adapted automatically to the following pattern by 'pipeline1.py':
         // First number should be the date of yesterday (before 11:35 am - 1 day) - 550 days
         // Second number sould be the date of yesterday (before 11:35 am - 1 day)
-        // Third number should be the station number (does not change)
+        // Third number is be the weather station number (does not change)
         path: "/produkt_nieder_tag_20221208_20240609_03668.txt";
     }
 
     block TempMoeFilePicker oftype FilePicker {
-        // String has to be adapted to the following pattern (automation was not possible here):
+        // String gets adapted automatically to the following pattern by 'pipeline1.py':
         // First number should be the date of yesterday (before 11:35 am - 1 day) - 550 days
         // Second number sould be the date of yesterday (before 11:35 am - 1 day)
-        // Third number should be the station number (does not change)
+        // Third number is be the weather station number (does not change)
         path: "/produkt_klima_tag_20221208_20240609_01279.txt";
     }
 
     block TempNueFilePicker oftype FilePicker {
-        // String has to be adapted to the following pattern (automation was not possible here):
+        // String gets adapted automatically to the following pattern by 'pipeline1.py':
         // First number should be the date of yesterday (before 11:35 am - 1 day) - 550 days
         // Second number sould be the date of yesterday (before 11:35 am - 1 day)
-        // Third number should be the station number (does not change)
+        // Third number is be the weather station number (does not change)
         path: "/produkt_klima_tag_20221208_20240609_03668.txt";
     }
 
