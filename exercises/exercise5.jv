@@ -36,13 +36,22 @@ pipeline Pipeline {
         upperBound: 1645;
     }
 
+    valuetype geoCoordinate oftype decimal {
+        constraints: [ geoCoordinateConstraint ];
+    }
+
+    constraint geoCoordinateConstraint oftype RangeConstraint {
+        lowerBound: -90.0;
+        upperBound: 90.0;
+    }
+
     block stopsTableInterpreter oftype TableInterpreter {
         header: true;
         columns: [
             "stop_id" oftype integer,
             "stop_name" oftype text,
-            "stop_lat" oftype decimal,
-            "stop_lon" oftype decimal,
+            "stop_lat" oftype geoCoordinate,
+            "stop_lon" oftype geoCoordinate,
             "zone_id" oftype zone1645
         ];
     }
