@@ -1,33 +1,33 @@
 pipeline Pipeline {
 
-    mowestaHttpExtractor
-        -> mowestaArchiveInterpreter
-        -> mowestaFilePicker
-        -> mowestaTextFileInterpreter
-        -> mowestaCSVInterpreter
-        -> mowestaTableInterpreter
-        -> mowestaSQLiteLoader;
+    stopsHttpExtractor
+        -> stopsArchiveInterpreter
+        -> stopsFilePicker
+        -> stopsTextFileInterpreter
+        -> stopsCSVInterpreter
+        -> stopsTableInterpreter
+        -> stopsSQLiteLoader;
 
-    block mowestaHttpExtractor oftype HttpExtractor {
+    block stopsHttpExtractor oftype HttpExtractor {
         url: "https://gtfs.rhoenenergie-bus.de/GTFS.zip";
     }
 
-    block mowestaArchiveInterpreter oftype ArchiveInterpreter {
+    block stopsArchiveInterpreter oftype ArchiveInterpreter {
         archiveType: "zip";
     }
 
-    block mowestaFilePicker oftype FilePicker {
+    block stopsFilePicker oftype FilePicker {
         path: "/stops.txt";
     }
 
-    block mowestaTextFileInterpreter oftype TextFileInterpreter {}
+    block stopsTextFileInterpreter oftype TextFileInterpreter {}
 
-    block mowestaCSVInterpreter oftype CSVInterpreter {
+    block stopsCSVInterpreter oftype CSVInterpreter {
         delimiter: ",";
         enclosing: '\"';
     }
 
-    block mowestaTableInterpreter oftype TableInterpreter {
+    block stopsTableInterpreter oftype TableInterpreter {
         header: true;
         columns: [
             "stop_id" oftype integer,
@@ -38,7 +38,7 @@ pipeline Pipeline {
         ];
     }
 
-    block mowestaSQLiteLoader oftype SQLiteLoader {
+    block stopsSQLiteLoader oftype SQLiteLoader {
         table: "stops";
         file: "gtfs.sqlite";
     }
