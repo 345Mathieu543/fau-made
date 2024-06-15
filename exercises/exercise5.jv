@@ -27,13 +27,13 @@ pipeline Pipeline {
         enclosing: '\"';
     }
 
-    valuetype month oftype integer {
-        constraints: [ posIntegerConstraint ];
+    valuetype zone1645 oftype integer {
+        constraints: [ zone1645Constraint ];
     }
 
-    constraint monthConstraint oftype RangeConstraint {
-        lowerBound: 1;
-        upperBound: 12;
+    constraint zone1645Constraint oftype RangeConstraint {
+        lowerBound: 1645;
+        upperBound: 1645;
     }
 
     block stopsTableInterpreter oftype TableInterpreter {
@@ -43,7 +43,7 @@ pipeline Pipeline {
             "stop_name" oftype text,
             "stop_lat" oftype decimal,
             "stop_lon" oftype decimal,
-            "zone_id" oftype integer
+            "zone_id" oftype zone1645
         ];
     }
 
