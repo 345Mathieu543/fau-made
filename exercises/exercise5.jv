@@ -27,6 +27,15 @@ pipeline Pipeline {
         enclosing: '\"';
     }
 
+    valuetype month oftype integer {
+        constraints: [ posIntegerConstraint ];
+    }
+
+    constraint monthConstraint oftype RangeConstraint {
+        lowerBound: 1;
+        upperBound: 12;
+    }
+
     block stopsTableInterpreter oftype TableInterpreter {
         header: true;
         columns: [

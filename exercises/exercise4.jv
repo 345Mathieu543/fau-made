@@ -48,7 +48,7 @@ pipeline Pipeline {
     }
 
     valuetype month oftype integer {
-        constraints: [ posIntegerConstraint ];
+        constraints: [ monthConstraint ];
     }
 
     constraint monthConstraint oftype RangeConstraint {
