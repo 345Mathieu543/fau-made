@@ -1,4 +1,4 @@
-pipeline Pipeline {
+pipeline Pipeline_Ex5 {
 
     stopsHttpExtractor
         -> stopsArchiveInterpreter

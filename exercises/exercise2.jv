@@ -1,4 +1,4 @@
-pipeline AirportsPipeline{
+pipeline Pipeline_Ex2 {
 
     HerbstpflanzungsExtractor
         -> HerbstpflanzungsTextInterpreter

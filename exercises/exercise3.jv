@@ -1,4 +1,4 @@
-pipeline GueterPipeline{
+pipeline Pipeline_Ex3 {
 
     GExtractor
         -> GTextInterpreter
