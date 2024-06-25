@@ -10,7 +10,7 @@ jv ./pipeline2.jv
 python3 ./pipeline3.py
 
 # Update plots
-pip install nbconvert[webpdf]
+pip install nbconvert[webpdf] > /dev/null
 jupyter nbconvert --execute --to notebook --inplace ./data-exploration.ipynb
 
 # Update reports
