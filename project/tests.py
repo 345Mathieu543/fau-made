@@ -4,36 +4,31 @@ import sqlite3
 
 class TestStringMethods(unittest.TestCase):
 
-    def test_csv_exists(self):
-        scv_path = 'csv_files/PedData.csv'
+    @classmethod
+    def setUpClass(cls):
+        cls.csv_path = 'csv_files/PedData.csv'
+        cls.db_path = '../data/data.sqlite'
 
-        if os.path.exists(scv_path):
-            os.remove(scv_path)
+        if os.path.exists(cls.csv_path):
+            os.remove(cls.csv_path)
 
-        os.system('python3 ./pipeline1.py')
-
-        message = "The CSV file has not been generated!"
-        
-        self.assertTrue(os.path.exists(scv_path), message)
-
-    def test_db_exists(self):
-        db_path = '../data/data.sqlite'
-
-        if os.path.exists(db_path):
-            os.remove(db_path)
+        if os.path.exists(cls.db_path):
+            os.remove(cls.db_path)
 
         os.system('./pipeline.sh')
 
+    def test_csv_exists(self):
+        message = "The CSV file has not been generated!"
+        self.assertTrue(os.path.exists(self.csv_path), message)
+
+    def test_db_exists(self):
         message = "The database does not exist!"
-        
-        self.assertTrue(os.path.exists(db_path), message)
+        self.assertTrue(os.path.exists(self.db_path), message)
 
     def test_db_not_empty(self):
-        db_path = '../data/data.sqlite'
-
         self.test_db_exists()
         
-        conn = sqlite3.connect(db_path)
+        conn = sqlite3.connect(self.db_path)
         cur = conn.cursor()
         
         cur.execute("SELECT COUNT(*) FROM pedestrians")
@@ -65,6 +60,44 @@ class TestStringMethods(unittest.TestCase):
         rows = cur.fetchall()
         message = "The data table is empty!"
         self.assertTrue(rows[0][0] > 0, message)
+
+        conn.close()
+    
+    def test_db_complete(self):
+        self.test_db_exists()
+        
+        conn = sqlite3.connect(self.db_path)
+        cur = conn.cursor()
+        
+        cur.execute("SELECT COUNT(*) FROM pedestrians")
+        rows = cur.fetchall()
+        message = "The pedestrians table has not exactly 550 rows!"
+        self.assertTrue(rows[0][0] == 550, message)
+        
+        cur.execute("SELECT COUNT(*) FROM rainmoe")
+        rows = cur.fetchall()
+        message = "The rainmoe table has not exactly 550 rows!"
+        self.assertTrue(rows[0][0] == 550, message)
+        
+        cur.execute("SELECT COUNT(*) FROM rainnue")
+        rows = cur.fetchall()
+        message = "The rainnue table has not exactly 550 rows!"
+        self.assertTrue(rows[0][0] == 550, message)
+        
+        cur.execute("SELECT COUNT(*) FROM tempmoe")
+        rows = cur.fetchall()
+        message = "The tempmoe table has not exactly 550 rows!"
+        self.assertTrue(rows[0][0] == 550, message)
+        
+        cur.execute("SELECT COUNT(*) FROM tempnue")
+        rows = cur.fetchall()
+        message = "The tempnue table has not exactly 550 rows!"
+        self.assertTrue(rows[0][0] == 550, message)
+
+        cur.execute("SELECT COUNT(*) FROM data")
+        rows = cur.fetchall()
+        message = "The data table has not exactly 550 rows!"
+        self.assertTrue(rows[0][0] == 550, message)
 
         conn.close()
         
