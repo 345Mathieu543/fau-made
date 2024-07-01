@@ -161,19 +161,18 @@ The data is comprehensive and relevant for the analysis of the correlation betwe
 
 ### Early insight to the results
 
-As this report should not exceed three A4 pages, I am only referring to the plots in the folder "plots".
-
 When analyzing the data, there are some outliers in the number of pedestrians. This is due to some special events that take place in Erlangen every year. This is the list of the events for the data between November 2022 and June 2024:
 
-- 2022-11-21 - 2022-12-23: "Weihnachtsmarkt"
 - 2023-05-25 - 2023-06-05: "Bergkirchweih"
-- 2023-10-21: "Lange Nacht der Wissenschaft"
+- 2023-10-21 - 2023-10-21: "Lange Nacht der Wissenschaft"
 - 2023-11-25 - 2023-12-23: "Weihnachtsmarkt"
 - 2024-05-16 - 2024-05-27: "Bergkirchweih"
 - 2024-05-30 - 2024-06-02: "Internationaler Comic Salon"
+
+As this report should not exceed three A4 pages, I am only referring to the plots in the folder "plots".
 
 <!-- ![plot1.svg](plots/plot1.pdf) -->
 <!-- ![plot2.svg](plots/plot2.pdf) -->
 <!-- ![plot3.svg](plots/plot3.pdf) -->
 
-Because these plots are saved as vector graphics, you can zoom in to see all the details.
+Since these plots are saved as vector graphics, you can zoom in to see all the details.
