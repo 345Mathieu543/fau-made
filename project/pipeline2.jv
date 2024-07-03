@@ -79,7 +79,7 @@ pipeline Pipeline2 {
         // First number should be the date of yesterday (before 11:35 am - 1 day) - 550 days
         // Second number sould be the date of yesterday (before 11:35 am - 1 day)
         // Third number is be the weather station number (does not change)
-        path: "/produkt_nieder_tag_20221229_20240630_01279.txt";
+        path: "/produkt_nieder_tag_20221231_20240702_01279.txt";
     }
 
     block RainNueFilePicker oftype FilePicker {
@@ -87,7 +87,7 @@ pipeline Pipeline2 {
         // First number should be the date of yesterday (before 11:35 am - 1 day) - 550 days
         // Second number sould be the date of yesterday (before 11:35 am - 1 day)
         // Third number is be the weather station number (does not change)
-        path: "/produkt_nieder_tag_20221229_20240630_03668.txt";
+        path: "/produkt_nieder_tag_20221231_20240702_03668.txt";
     }
 
     block TempMoeFilePicker oftype FilePicker {
@@ -95,7 +95,7 @@ pipeline Pipeline2 {
         // First number should be the date of yesterday (before 11:35 am - 1 day) - 550 days
         // Second number sould be the date of yesterday (before 11:35 am - 1 day)
         // Third number is be the weather station number (does not change)
-        path: "/produkt_klima_tag_20221229_20240630_01279.txt";
+        path: "/produkt_klima_tag_20221231_20240702_01279.txt";
     }
 
     block TempNueFilePicker oftype FilePicker {
@@ -103,7 +103,7 @@ pipeline Pipeline2 {
         // First number should be the date of yesterday (before 11:35 am - 1 day) - 550 days
         // Second number sould be the date of yesterday (before 11:35 am - 1 day)
         // Third number is be the weather station number (does not change)
-        path: "/produkt_klima_tag_20221229_20240630_03668.txt";
+        path: "/produkt_klima_tag_20221231_20240702_03668.txt";
     }
 
     block PedestriansTextFileInterpreter oftype TextFileInterpreter {}
