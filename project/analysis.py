@@ -41,7 +41,15 @@ avg_temp_ltm = less_than_median_df['temp'].mean()
 avg_rain_ltm = less_than_median_df['rain'].mean()
 
 print()
-print("Statistics for the days where the number of pedestrians has a difference\nof more than 10 % to the respective median of that weekday.")
+print("This script has been executed on the " + pd.to_datetime('today').strftime('%Y-%m-%d') + ", with daily data from the\nperiod " + df['date'].iloc[0] + " to " + df['date'].iloc[-1] + ".")
+print()
+print("Median number of pedestrians per weekday (without the event periods):")
+margined_weekdays = {'Monday': 'Monday:    ', 'Tuesday': 'Tuesday:   ', 'Wednesday': 'Wednesday: ', 'Thursday': 'Thursday:  ', 'Friday': 'Friday:    ', 'Saturday': 'Saturday:  ', 'Sunday': 'Sunday:    '}
+for i in medians:
+    weekday_str = i + ": "
+    print(weekday_str.ljust(11) + str(int(medians[i])).rjust(5))
+print()
+print("Statistics for days when the number of pedestrians differs by more than\n10% from the median for that weekday.")
 print()
 print("Days with more than 10 % above the median:")
 print("Average temperature: " + str(round(avg_temp_mtm, 2)) + " °C")
