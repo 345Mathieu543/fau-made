@@ -3,3 +3,4 @@
 !/data/.gitkeep
 *.sqlite
 *.key
+/project/plots/garbage.pdf
