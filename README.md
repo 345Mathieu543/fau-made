@@ -1,3 +1,7 @@
+# Exercise Badges
+
+![](https://byob.yarr.is/345Mathieu543/fau-made/score_ex1) ![](https://byob.yarr.is/345Mathieu543/fau-made/score_ex2) ![](https://byob.yarr.is/345Mathieu543/fau-made/score_ex3) ![](https://byob.yarr.is/345Mathieu543/fau-made/score_ex4) ![](https://byob.yarr.is/345Mathieu543/fau-made/score_ex5)
+
 # Project Plan
 
 ## Title
@@ -37,11 +41,5 @@ The required data (rainfall per day and average temperature per day) is split in
 "Thanks to the laser technology used, we as a service provider are able to determine the exact pedestrian frequency in real time and make it available immediately. We attach great importance to absolute transparency and a clearly understandable methodology that is 100% data protection compliant." (translated citation from: [https://www.hystreet.com/](https://www.hystreet.com/))
 
 This data source also provides some weather data, but we prefer to use the weather data from the German Weather Service. Furthermore, this project needs at least two data sources. So this data source will only be used to extract the number of pedestrians per day in the pedestrian zone of Erlangen.
-
-# Exercise Badges
-
-![](https://byob.yarr.is/345Mathieu543/fau-made/score_ex1) ![](https://byob.yarr.is/345Mathieu543/fau-made/score_ex2) ![](https://byob.yarr.is/345Mathieu543/fau-made/score_ex3) ![](https://byob.yarr.is/345Mathieu543/fau-made/score_ex4) ![](https://byob.yarr.is/345Mathieu543/fau-made/score_ex5)
-	By category:
-		Shape: 4 of 4
 		Types: 13 of 13
 ```
